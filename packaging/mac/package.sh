@@ -1,7 +1,5 @@
-$SCRITE_CRASHPAD_ROOT/bin/dump_syms ../../../Release/Scrite.app.dSYM/Contents/Resources/DWARF/Scrite > ../../../Release/Scrite.app.sym
 
 cp -vaRf ../../../Release/Scrite.app .
-codesign -s "$SCRITE_IDENT" ./Scrite.app/Contents/MacOS/crashpad_handler
 cp -vaf ../../Info.plist Scrite.app/Contents
 ~/Qt/5.15.18/clang_64/bin/macdeployqt Scrite.app -qmldir=../../qml -verbose=1 -appstore-compliant -hardened-runtime -codesign="$SCRITE_IDENT"
 mkdir Scrite-1.0.5

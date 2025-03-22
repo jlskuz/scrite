@@ -20,10 +20,6 @@
 #include "localstorage.h"
 #include "scritedocument.h"
 
-#ifdef ENABLE_CRASHPAD_CRASH_TEST
-#include "crashpadmodule.h"
-#endif
-
 #include <QDir>
 #include <QUuid>
 #include <QtMath>
@@ -1109,14 +1105,6 @@ bool Application::notify(QObject *object, QEvent *event)
 
     if (event->type() == QEvent::KeyPress) {
         QKeyEvent *ke = static_cast<QKeyEvent *>(event);
-
-#ifdef ENABLE_CRASHPAD_CRASH_TEST
-        if (ke->modifiers() & Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier
-            && ke->key() == Qt::Key_R) {
-            CrashpadModule::crash();
-            return true;
-        }
-#endif
 
         if (ke->modifiers() & Qt::ControlModifier && ke->key() == Qt::Key_M) {
             emit minimizeWindowRequest();

@@ -368,7 +368,6 @@ linux {
 include($$PWD/3rdparty/sonnet/sonnet.pri)
 include($$PWD/3rdparty/quazip/quazip.pri)
 include($$PWD/3rdparty/simplecrypt/simplecrypt.pri)
-include($$PWD/3rdparty/crashpad/crashpad.pri)
 
 DISTFILES += \
     3rdparty/openssl/README \

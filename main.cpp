@@ -16,7 +16,6 @@
 #include "application.h"
 #include "shortcutsmodel.h"
 #include "scritedocument.h"
-#include "crashpadmodule.h"
 #include "documentfilesystem.h"
 #include "scritedocumentvault.h"
 #include "notificationmanager.h"
@@ -25,16 +24,6 @@
 
 int main(int argc, char **argv)
 {
-    if (CrashpadModule::isAvailable()) {
-        if (!CrashpadModule::prepare())
-            return 0;
-
-        if (CrashpadModule::initialize()) {
-#ifdef ENABLE_CRASHPAD_CRASH_TEST
-            qInfo() << "Crashpad Initialized";
-#endif
-        }
-    }
 
 #ifndef Q_OS_WINDOWS
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
