@@ -79,6 +79,7 @@ QIcon AbstractReportGenerator::icon() const
 
 bool AbstractReportGenerator::isFeatureEnabled() const
 {
+    return true;
     if (User::instance()->isLoggedIn()) {
         const bool allReportsEnabled = AppFeature::isEnabled(Scrite::ReportFeature);
         const bool thisSpecificImporterEnabled = allReportsEnabled

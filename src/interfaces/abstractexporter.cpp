@@ -51,6 +51,7 @@ QString AbstractExporter::nameFilters() const
 
 bool AbstractExporter::isFeatureEnabled() const
 {
+    return true;
     if (User::instance()->isLoggedIn()) {
         const bool allReportsEnabled = AppFeature::isEnabled(Scrite::ExportFeature);
         const bool thisSpecificReportEnabled =

@@ -70,18 +70,19 @@ Rectangle {
             Scrite.window.raise()
 
             // Show initial UI
-            if(Scrite.user.loggedIn) {
-                if(Runtime.allowAppUsage)
-                    showHomeScreenOrOpenFile()
-                else
-                    UserAccountDialog.launch()
-            } else {
-                var splashScreen = SplashScreen.launch()
-                if(splashScreen)
-                    splashScreen.closed.connect(_private.splashScreenWasClosed)
-                else
-                    splashScreenWasClosed()
-            }
+            // if(Scrite.user.loggedIn) {
+            //     if(Runtime.allowAppUsage)
+            //         showHomeScreenOrOpenFile()
+            //     else
+            //         UserAccountDialog.launch()
+            // } else {
+            //     var splashScreen = SplashScreen.launch()
+            //     if(splashScreen)
+            //         splashScreen.closed.connect(_private.splashScreenWasClosed)
+            //     else
+            //         splashScreenWasClosed()
+            // }
+            showHomeScreenOrOpenFile()
         }
 
         function determineDefaultFontSize() {

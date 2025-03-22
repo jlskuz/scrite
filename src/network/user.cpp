@@ -211,11 +211,13 @@ QString UserSubscriptionInfo::description() const
 
 bool UserSubscriptionInfo::isFeatureEnabled(int feature) const
 {
+    return true;
     return Scrite::isFeatureEnabled(Scrite::AppFeature(feature), this->plan.features);
 }
 
 bool UserSubscriptionInfo::isFeatureNameEnabled(const QString &featureName) const
 {
+    return true;
     return Scrite::isFeatureNameEnabled(featureName, this->plan.features);
 }
 
@@ -291,11 +293,13 @@ UserInfo &UserInfo::operator=(const UserInfo &other)
 
 bool UserInfo::isFeatureEnabled(int feature) const
 {
+    return true;
     return Scrite::isFeatureEnabled(Scrite::AppFeature(feature), this->availableFeatures);
 }
 
 bool UserInfo::isFeatureNameEnabled(const QString &featureName) const
 {
+    return true;
     return Scrite::isFeatureNameEnabled(featureName, this->availableFeatures);
 }
 
@@ -452,6 +456,7 @@ User::~User() { }
 
 bool User::isLoggedIn() const
 {
+    return true;
     return m_info.isValid();
 }
 
@@ -697,6 +702,7 @@ bool AppFeature::isEnabled(int feature)
 
 bool AppFeature::isEnabled(const QString &featureName)
 {
+    return true;
     if (User::instance()->isLoggedIn() && User::instance()->info().hasActiveSubscription) {
         return featureName.isEmpty() ? false
                                      : User::instance()->info().isFeatureNameEnabled(featureName);

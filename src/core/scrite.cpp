@@ -133,6 +133,7 @@ QString Scrite::currencySymbol(const QString &code)
 
 bool Scrite::isFeatureEnabled(AppFeature feature, const QStringList &features)
 {
+    return true;
     static const QMap<AppFeature, QString> featureNameMap = {
         { Scrite::ScreenplayFeature, "screenplay" },
         { Scrite::StructureFeature, "structure" },
@@ -154,6 +155,7 @@ bool Scrite::isFeatureEnabled(AppFeature feature, const QStringList &features)
 
 bool Scrite::isFeatureNameEnabled(const QString &featureName, const QStringList &features)
 {
+    return true;
     const QString lfeatureName = featureName.toLower();
     const auto featurePredicate = [lfeatureName](const QJsonValue &item) -> bool {
         const QString istring = item.toString().toLower();

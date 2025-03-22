@@ -484,7 +484,7 @@ public:
     Q_SIGNAL void featureChanged();
 
     Q_PROPERTY(bool enabled READ isEnabled NOTIFY enabledChanged)
-    bool isEnabled() const { return m_enabled; }
+    bool isEnabled() const { return true; }
     Q_SIGNAL void enabledChanged();
 
 private:
