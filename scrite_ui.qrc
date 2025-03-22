@@ -115,7 +115,6 @@
         <file>qml/helpers/PdfView.qml</file>
         <file>qml/helpers/qmldir</file>
         <file>qml/helpers/RectangleTabView.qml</file>
-        <file>qml/helpers/RichTextEdit.qml</file>
         <file>qml/helpers/RubberBand.qml</file>
         <file>qml/helpers/SceneFeaturedImage.qml</file>
         <file>qml/helpers/SceneTypeImage.qml</file>

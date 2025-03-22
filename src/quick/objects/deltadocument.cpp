@@ -22,9 +22,9 @@
 #include <QTextBlock>
 #include <QEventLoop>
 #include <QTextCursor>
-#include <QWebChannel>
+// #include <QWebChannel>
 #include <QTextDocument>
-#include <QWebEnginePage>
+// #include <QWebEnginePage>
 #include <QTextBlockFormat>
 
 DeltaDocument::DeltaDocument(QObject *parent) : QObject(parent) { }
@@ -145,15 +145,15 @@ DeltaDocument::ResolveResult DeltaDocument::blockingResolve(const QJsonObject &c
     TransformAttributes txAttrs;
     txAttrs.content = content;
 
-    QWebChannel webChannel;
-    webChannel.registerObject(QStringLiteral("transform"), &txAttrs);
+    // QWebChannel webChannel;
+    // webChannel.registerObject(QStringLiteral("transform"), &txAttrs);
 
     QEventLoop eventLoop;
     connect(&txAttrs, &TransformAttributes::quitRequest, &eventLoop, &QEventLoop::quit);
 
-    QWebEnginePage webPage;
-    webPage.setWebChannel(&webChannel);
-    webPage.load(QUrl(QStringLiteral("qrc:/richtexttransform.html")));
+    // QWebEnginePage webPage;
+    // webPage.setWebChannel(&webChannel);
+    // webPage.load(QUrl(QStringLiteral("qrc:/richtexttransform.html")));
 
     eventLoop.exec();
 
@@ -166,12 +166,12 @@ void DeltaDocument::asyncResolve(const QJsonObject &content, int callId, QObject
     TransformAttributes *txAttrs = new TransformAttributes(receiver);
     txAttrs->content = content;
 
-    QWebChannel *webChannel = new QWebChannel(txAttrs);
-    webChannel->registerObject(QStringLiteral("transform"), txAttrs);
+    // QWebChannel *webChannel = new QWebChannel(txAttrs);
+    // webChannel->registerObject(QStringLiteral("transform"), txAttrs);
 
-    QWebEnginePage *webPage = new QWebEnginePage(txAttrs);
-    webPage->setWebChannel(webChannel);
-    webPage->load(QUrl(QStringLiteral("qrc:/richtexttransform.html")));
+    // QWebEnginePage *webPage = new QWebEnginePage(txAttrs);
+    // webPage->setWebChannel(webChannel);
+    // webPage->load(QUrl(QStringLiteral("qrc:/richtexttransform.html")));
 
     connect(txAttrs, &TransformAttributes::quitRequest, receiver, [=]() {
         const ResolveResult result(callId, txAttrs->plainText, txAttrs->html);

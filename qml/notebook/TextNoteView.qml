@@ -103,24 +103,27 @@ Item {
                 }
             }
 
-            highDetailComponent: RichTextEdit {
-                text: note.content
-                placeholderText: "Content"
-                tabSequenceIndex: 1
-                tabSequenceManager: noteTabManager
-                adjustTextWidthBasedOnScrollBar: false
-
-                background: Rectangle {
-                    color: Runtime.colors.primary.windowColor
-                    opacity: 0.15
-                }
-
-                onTextChanged: note.content = text
-
-                function assumeFocus() {
-                    textArea.forceActiveFocus()
-                }
+            highDetailComponent: Rectangle {
+                color: Qt.red
             }
+            //     RichTextEdit {
+            //     text: note.content
+            //     placeholderText: "Content"
+            //     tabSequenceIndex: 1
+            //     tabSequenceManager: noteTabManager
+            //     adjustTextWidthBasedOnScrollBar: false
+
+            //     background: Rectangle {
+            //         color: Runtime.colors.primary.windowColor
+            //         opacity: 0.15
+            //     }
+
+            //     onTextChanged: note.content = text
+
+            //     function assumeFocus() {
+            //         textArea.forceActiveFocus()
+            //     }
+            // }
         }
     }
 

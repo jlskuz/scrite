@@ -189,11 +189,6 @@ DialogLauncher {
                                 url: "https://github.com/dragonman225/curved-arrows"
                             }
 
-                            ListElement {
-                                credits: "<strong>QuillJS</strong> for powering rich text editor in Notebook."
-                                url: "https://quilljs.com/"
-                            }
-
                             Component.onCompleted: {
                                 append({
                                            "credits": "<strong>Qt</strong> " + Scrite.app.qtVersionString + " as UI framework for the entire app.",

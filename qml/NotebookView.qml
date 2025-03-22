@@ -2956,19 +2956,8 @@ Rectangle {
                                         onTextChanged: if(textArea.activeFocus) summaryLoader.character.summary = text
                                     }
 
-                                    highDetailComponent: RichTextEdit {
-                                        text: summaryLoader.character.summary
-                                        placeholderText: "Character Summary"
-                                        tabSequenceIndex: 10
-                                        tabSequenceManager: characterInfoTabSequence
-                                        background: Rectangle {
-                                            color: Runtime.colors.primary.windowColor
-                                            opacity: 0.15
-                                        }
-                                        adjustTextWidthBasedOnScrollBar: false
-                                        // ScrollBar.vertical: characterSummaryVScrollBar
-
-                                        onTextChanged: summaryLoader.character.summary = text
+                                    highDetailComponent: Rectangle {
+                                        color: Qt.red
                                     }
                                 }
                             }
