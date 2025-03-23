@@ -1,4 +1,5 @@
 QT += gui qml quick widgets xml concurrent network quickcontrols2 multimedia printsupport svg charts pdf
+QT += SonnetCore SonnetUi
 DESTDIR = $$PWD/../Release/
 TARGET = Scrite
 
@@ -34,7 +35,7 @@ INCLUDEPATH += ../apikeys ../profilingtools . \
         ./src/document \
         ./src/interfaces \
         ./src/reports \
-        ./src/automation
+        ./src/automation \
         ./src/restapikey
 
 HEADERS += \
@@ -366,6 +367,9 @@ linux {
 }
 
 include($$PWD/3rdparty/sonnet/sonnet.pri)
+# CONFIG += link_pkgconfig
+# PKGCONFIG += sonnet_core sonnet_ui
+
 include($$PWD/3rdparty/quazip/quazip.pri)
 include($$PWD/3rdparty/simplecrypt/simplecrypt.pri)
 

@@ -26,10 +26,14 @@
 #include <QRandomGenerator>
 #include <QCoreApplication>
 
-#include "3rdparty/sonnet/sonnet/src/core/speller.h"
-#include "3rdparty/sonnet/sonnet/src/core/loader_p.h"
-#include "3rdparty/sonnet/sonnet/src/core/textbreaks_p.h"
-#include "3rdparty/sonnet/sonnet/src/core/guesslanguage.h"
+#include <Sonnet/Speller>
+#include <Sonnet/GuessLanguage>
+
+
+// #include "3rdparty/sonnet/sonnet/src/core/speller.h"
+// #include "3rdparty/sonnet/sonnet/src/core/loader_p.h"
+// #include "3rdparty/sonnet/sonnet/src/core/textbreaks_p.h"
+// #include "3rdparty/sonnet/sonnet/src/core/guesslanguage.h"
 
 #ifdef Q_OS_MAC
 #include "3rdparty/sonnet/sonnet/src/plugins/nsspellchecker/nsspellcheckerclient.h"
@@ -74,7 +78,7 @@ Q_DECLARE_METATYPE(SpellCheckServiceRequest)
 
 void InitializeSpellCheckThread()
 {
-    Sonnet::Loader::openLoader();
+    // Sonnet::Loader::openLoader();
 }
 
 SpellCheckServiceResult CheckSpellings(const SpellCheckServiceRequest &request)
@@ -112,52 +116,52 @@ SpellCheckServiceResult CheckSpellings(const SpellCheckServiceRequest &request)
      * good place for us to accept community contribution.
      */
 
-    const Sonnet::TextBreaks::Positions wordPositions =
-            Sonnet::TextBreaks::wordBreaks(request.text);
-    if (wordPositions.isEmpty() || Sonnet::Loader::openLoader() == nullptr)
+    // const Sonnet::TextBreaks::Positions wordPositions =
+    //         Sonnet::TextBreaks::wordBreaks(request.text);
+    // if (wordPositions.isEmpty() || Sonnet::Loader::openLoader() == nullptr)
         return result;
 
-    EnglishLanguageSpeller speller;
-    for (const Sonnet::TextBreaks::Position &wordPosition : wordPositions) {
-        const QString word = request.text.mid(wordPosition.start, wordPosition.length);
-        if (word.isEmpty())
-            continue; // not sure why this would happen, but just keeping safe.
+    // EnglishLanguageSpeller speller;
+    // for (const Sonnet::TextBreaks::Position &wordPosition : wordPositions) {
+    //     const QString word = request.text.mid(wordPosition.start, wordPosition.length);
+    //     if (word.isEmpty())
+    //         continue; // not sure why this would happen, but just keeping safe.
 
-#ifndef Q_OS_MAC
-        // We have to do this on Windows and Linux, otherwise all non-English words will
-        // be flagged as spelling mistakes. What would be ideal is to check if the entire
-        // word only has non-latin letters, but this is good enough.
-        if (word.at(0).script() != QChar::Script_Latin)
-            continue;
-#endif
+// #ifndef Q_OS_MAC
+//         // We have to do this on Windows and Linux, otherwise all non-English words will
+//         // be flagged as spelling mistakes. What would be ideal is to check if the entire
+//         // word only has non-latin letters, but this is good enough.
+//         if (word.at(0).script() != QChar::Script_Latin)
+//             continue;
+// #endif
 
-        if (Sonnet::Loader::openLoader() == nullptr) {
-            result.misspelledFragments.clear();
-            break;
-        }
+//         if (Sonnet::Loader::openLoader() == nullptr) {
+//             result.misspelledFragments.clear();
+//             break;
+//         }
 
-        const bool misspelled = speller.isMisspelled(word);
-        if (misspelled) {
-            if (request.ignoreList.contains(word))
-                continue;
+//         const bool misspelled = speller.isMisspelled(word);
+//         if (misspelled) {
+//             if (request.ignoreList.contains(word))
+//                 continue;
 
-            if (request.characterNames.contains(word, Qt::CaseInsensitive))
-                continue;
+//             if (request.characterNames.contains(word, Qt::CaseInsensitive))
+//                 continue;
 
-            if (word.endsWith("\'s", Qt::CaseInsensitive)) {
-                if (request.characterNames.contains(word.leftRef(word.length() - 2),
-                                                    Qt::CaseInsensitive))
-                    continue;
-            }
+//             if (word.endsWith("\'s", Qt::CaseInsensitive)) {
+//                 if (request.characterNames.contains(word.leftRef(word.length() - 2),
+//                                                     Qt::CaseInsensitive))
+//                     continue;
+//             }
 
-            const QStringList suggestions = speller.suggest(word);
-            TextFragment fragment(wordPosition.start, wordPosition.length, suggestions);
-            if (fragment.isValid())
-                result.misspelledFragments << fragment;
-        }
-    }
+//             const QStringList suggestions = speller.suggest(word);
+//             TextFragment fragment(wordPosition.start, wordPosition.length, suggestions);
+//             if (fragment.isValid())
+//                 result.misspelledFragments << fragment;
+//         }
+//     }
 
-    return result;
+//     return result;
 }
 
 bool AddToDictionary(const QString &word)

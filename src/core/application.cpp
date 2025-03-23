@@ -55,7 +55,9 @@
 #include <QtConcurrentMap>
 #include <QtConcurrentRun>
 #include <QOperatingSystemVersion>
-#include <QNetworkConfigurationManager>
+// #include <QNetworkConfigurationManager>
+
+#include <Sonnet/Speller>
 
 // #define ENABLE_SCRIPT_HOTKEY
 

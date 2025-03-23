@@ -19,9 +19,9 @@
 #include "timeprofiler.h"
 #include "scritedocument.h"
 #include "transliteration.h"
-#include "spellcheckservice.h"
+// #include "spellcheckservice.h"
 #include "systemtextinputmanager.h"
-#include "3rdparty/sonnet/sonnet/src/core/textbreaks_p.h"
+//#include "3rdparty/sonnet/sonnet/src/core/textbreaks_p.h"
 
 #include <QTimer>
 #include <QPainter>
@@ -40,6 +40,10 @@
 #include <QAbstractTextDocumentLayout>
 
 #include <PhTranslateLib>
+#include <Sonnet/Speller>
+#include <Sonnet/Settings>
+#include <Sonnet/BackgroundChecker>
+#include <Sonnet/GuessLanguage>
 
 static QStringList getCustomFontFilePaths()
 {
@@ -585,44 +589,45 @@ QString TransliterationEngine::transliteratedWord(const QString &word, void *tra
 QString TransliterationEngine::transliteratedParagraph(const QString &paragraph,
                                                        void *transliterator, bool includingLastWord)
 {
-    if (transliterator == nullptr || paragraph.isEmpty())
-        return paragraph;
+    return paragraph;
+    // if (transliterator == nullptr || paragraph.isEmpty())
+    //     return paragraph;
 
-    const Sonnet::TextBreaks::Positions wordPositions = Sonnet::TextBreaks::wordBreaks(paragraph);
-    if (wordPositions.isEmpty())
-        return paragraph;
+    // const Sonnet::TextBreaks::Positions wordPositions = Sonnet::TextBreaks::wordBreaks(paragraph);
+    // if (wordPositions.isEmpty())
+    //     return paragraph;
 
-    const QChar lastCharacter = paragraph.at(paragraph.length() - 1);
-    const bool endsWithSpaceOrPunctuation =
-            lastCharacter.isSpace() || lastCharacter.isPunct() || lastCharacter.isDigit();
-    if (endsWithSpaceOrPunctuation)
-        includingLastWord = true;
+    // const QChar lastCharacter = paragraph.at(paragraph.length() - 1);
+    // const bool endsWithSpaceOrPunctuation =
+    //         lastCharacter.isSpace() || lastCharacter.isPunct() || lastCharacter.isDigit();
+    // if (endsWithSpaceOrPunctuation)
+    //     includingLastWord = true;
 
-    QString ret;
-    Sonnet::TextBreaks::Position wordPosition;
-    int lastCharIndex = -1;
-    for (int i = 0; i < wordPositions.size(); i++) {
-        ++lastCharIndex;
+    // QString ret;
+    // Sonnet::TextBreaks::Position wordPosition;
+    // int lastCharIndex = -1;
+    // for (int i = 0; i < wordPositions.size(); i++) {
+    //     ++lastCharIndex;
 
-        wordPosition = wordPositions.at(i);
-        if (wordPosition.start > lastCharIndex)
-            ret += paragraph.midRef(lastCharIndex, wordPosition.start - lastCharIndex);
+    //     wordPosition = wordPositions.at(i);
+    //     if (wordPosition.start > lastCharIndex)
+    //         ret += paragraph.midRef(lastCharIndex, wordPosition.start - lastCharIndex);
 
-        const QString word = paragraph.mid(wordPosition.start, wordPosition.length);
-        lastCharIndex = wordPosition.start + wordPosition.length - 1;
-        QString replacement;
+    //     const QString word = paragraph.mid(wordPosition.start, wordPosition.length);
+    //     lastCharIndex = wordPosition.start + wordPosition.length - 1;
+    //     QString replacement;
 
-        if (i < wordPositions.length() - 1 || includingLastWord)
-            replacement = transliteratedWord(word, transliterator);
-        else
-            replacement = word;
+    //     if (i < wordPositions.length() - 1 || includingLastWord)
+    //         replacement = transliteratedWord(word, transliterator);
+    //     else
+    //         replacement = word;
 
-        ret += replacement;
-    }
+    //     ret += replacement;
+    // }
 
-    ret += paragraph.midRef(lastCharIndex + 1);
+    // ret += paragraph.midRef(lastCharIndex + 1);
 
-    return ret;
+    // return ret;
 }
 
 QFont TransliterationEngine::languageFont(TransliterationEngine::Language language,
