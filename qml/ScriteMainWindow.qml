@@ -1942,8 +1942,8 @@ Item {
 
                     SaveFileTask.save( () => {
                                           closeEventHandler.handleCloseEvent = false
-                                          if( TrialNotActivatedDialog.launch() !== null)
-                                            return
+                                          // if( TrialNotActivatedDialog.launch() !== null)
+                                          //   return
                                           Scrite.window.close()
                                       } )
                 } else
