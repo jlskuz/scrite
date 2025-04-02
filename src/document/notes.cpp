@@ -120,11 +120,6 @@ void Note::setForm(Form *val)
             m_autoSummaryText = true;
             emit summaryChanged();
         }
-
-        User::instance()->logActivity2(
-                QStringLiteral("notebookform"),
-                QJsonObject({ { QStringLiteral("id"), m_form->id() },
-                              { QStringLiteral("name"), m_form->title() } }));
     } else {
         if (!m_formData.isEmpty()) {
             m_formData = QJsonObject();

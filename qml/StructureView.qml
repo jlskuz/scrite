@@ -4135,6 +4135,5 @@ Item {
     Component.onCompleted: {
         AnnotationPropertyEditorDock.annotation = Qt.binding( () => { return annotationGripLoader.annotation } )
         AnnotationPropertyEditorDock.itemsBoundingBox = canvasItemsBoundingBox
-        Scrite.user.logActivity1("structure")
     }
 }

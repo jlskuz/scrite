@@ -412,12 +412,6 @@ public:
     UserInfo info() const { return m_info; }
     Q_SIGNAL void infoChanged();
 
-    Q_SLOT void logActivity1(const QString &activity)
-    {
-        this->logActivity2(activity, QJsonValue());
-    }
-    Q_SLOT void logActivity2(const QString &activity, const QJsonValue &data);
-
     Q_PROPERTY(bool busy READ isBusy NOTIFY busyChanged)
     bool isBusy() const;
     Q_SIGNAL void busyChanged();

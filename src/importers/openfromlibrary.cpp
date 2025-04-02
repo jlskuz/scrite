@@ -268,10 +268,6 @@ void LibraryServiceOpenRecordTask::openRecord()
         this->recordFetched(name, reply->readAll());
         reply->deleteLater();
     });
-
-    const QString activity = m_library == m_parent->templates() ? QStringLiteral("template")
-                                                                : QStringLiteral("scriptalay");
-    User::instance()->logActivity2(activity, name);
 }
 
 void LibraryServiceOpenRecordTask::complete()

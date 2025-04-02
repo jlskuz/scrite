@@ -223,8 +223,6 @@ void TransliterationEngine::setLanguage(TransliterationEngine::Language val)
     }
 
     emit languageChanged();
-
-    User::instance()->logActivity2(QStringLiteral("language"), languageName);
 }
 
 QString TransliterationEngine::languageAsString() const

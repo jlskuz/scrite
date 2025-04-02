@@ -148,7 +148,6 @@ Rectangle {
 
     Component.onCompleted: {
         notebookTree.activateFromCurrentScreenplayElement()
-        Scrite.user.logActivity1("notebook")
     }
 
     FontMetrics {
