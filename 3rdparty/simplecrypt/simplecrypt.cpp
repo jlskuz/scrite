@@ -35,6 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <QByteArray>
 #include <QDataStream>
 #include <QCryptographicHash>
+#include <QIODevice>
 
 SimpleCrypt::SimpleCrypt():
     m_key(0),

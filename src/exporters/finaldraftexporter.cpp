@@ -322,7 +322,9 @@ bool FinalDraftExporter::doExport(QIODevice *device)
     const QString xml = doc.toString(2);
 
     QTextStream ts(device);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ts.setCodec("utf-8");
+#endif
     ts.setAutoDetectUnicode(true);
 
     ts << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n";

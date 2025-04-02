@@ -23,6 +23,8 @@
 #include <QPdfWriter>
 #include <QPaintEngine>
 #include <QGuiApplication>
+// for QT_VERSION in Qt5 checks:
+#include <QtGlobal>
 
 PdfExportableGraphicsScene::PdfExportableGraphicsScene(QObject *parent) : QGraphicsScene(parent)
 {
@@ -155,10 +157,17 @@ void PdfExportableGraphicsScene::addStandardItems(int items)
         fields[HeaderFooter::Website] = screenplay->website();
         fields[HeaderFooter::Comment] = m_comment;
         fields[HeaderFooter::Watermark] = m_watermark;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         fields[HeaderFooter::Date] = QDate::currentDate().toString(Qt::SystemLocaleShortDate);
         fields[HeaderFooter::Time] = QTime::currentTime().toString(Qt::SystemLocaleShortDate);
         fields[HeaderFooter::DateTime] =
                 QDateTime::currentDateTime().toString(Qt::SystemLocaleShortDate);
+#else
+        fields[HeaderFooter::Date] = QLocale::system().toString(QDate::currentDate(), QLocale::ShortFormat);
+        fields[HeaderFooter::Time] = QLocale::system().toString(QTime::currentTime(), QLocale::ShortFormat);
+        fields[HeaderFooter::DateTime] = QLocale::system().toString(QDateTime::currentDateTime(), QLocale::ShortFormat);
+#endif
+
         fields[HeaderFooter::PageNumber] = QStringLiteral("1.");
         fields[HeaderFooter::PageNumberOfCount] = QStringLiteral("1/1");
     }
@@ -290,7 +299,7 @@ GraphicsHeaderItem::GraphicsHeaderItem(const QString &title, const QString &subt
     titleFont.setBold(true);
 
     const QFontMetricsF titleFontMetrics(titleFont);
-    const qreal actualTitleWidth = titleFontMetrics.width(title);
+    const qreal actualTitleWidth = titleFontMetrics.horizontalAdvance(title);
 
     QGraphicsTextItem *titleText = new QGraphicsTextItem(this);
     titleText->setTextWidth(qMin(actualTitleWidth, maxTitleWidth));
@@ -387,7 +396,7 @@ qreal GraphicsHeaderItem::idealContainerWidth(const QString &title)
         return ret;
     }();
     const QFontMetricsF titleFontMetrics(titleFont);
-    const qreal actualTitleWidth = titleFontMetrics.width(title);
+    const qreal actualTitleWidth = titleFontMetrics.horizontalAdvance(title);
     return qMax(712.0, actualTitleWidth / 0.35);
 }
 
