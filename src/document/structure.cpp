@@ -5489,12 +5489,9 @@ void StructureElementConnector::computeConnectorShape()
         return;
     }
 
-    const QString futureWatcherName = QStringLiteral("futureWatcher");
-    QFutureWatcher<QPainterPath> *futureWatcher = this->findChild<QFutureWatcher<QPainterPath> *>(
-            futureWatcherName, Qt::FindDirectChildrenOnly);
-    if (futureWatcher) {
-        futureWatcher->cancel();
-        futureWatcher->deleteLater();
+    if (m_futureWatcher) {
+        m_futureWatcher->cancel();
+        m_futureWatcher->deleteLater();
     }
 
     auto getElementRect = [=](StructureElement *e) {
@@ -5517,16 +5514,15 @@ void StructureElementConnector::computeConnectorShape()
      * are better off delegating the whole computation to a separate
      * thread.
      */
-    futureWatcher = new QFutureWatcher<QPainterPath>(this);
-    futureWatcher->setObjectName(futureWatcherName);
-    connect(futureWatcher, &QFutureWatcher<QPainterPath>::finished, this, [=]() {
-        if (!futureWatcher->isCanceled()) {
-            m_connectorShape = futureWatcher->result();
+    m_futureWatcher = new QFutureWatcher<QPainterPath>(this);
+    connect(m_futureWatcher, &QFutureWatcher<QPainterPath>::finished, this, [=]() {
+        if (!m_futureWatcher->isCanceled()) {
+            m_connectorShape = m_futureWatcher->result();
             this->update();
         }
-        futureWatcher->deleteLater();
+        m_futureWatcher->deleteLater();
     });
-    futureWatcher->setFuture(QtConcurrent::run(&StructureElementConnector::curvedArrowPath, r1, r2,
+    m_futureWatcher->setFuture(QtConcurrent::run(&StructureElementConnector::curvedArrowPath, r1, r2,
                                                arrowHeadSize, false));
 }
 

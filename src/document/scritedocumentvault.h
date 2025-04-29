@@ -18,6 +18,7 @@
 #include <QQmlEngine>
 #include <QFileInfoList>
 #include <QAbstractItemModel>
+#include <QFutureWatcher>
 
 #include "scritefileinfo.h"
 
@@ -89,6 +90,8 @@ private:
 
     QList<ScriteFileInfo> m_allFileInfoList; // including current document
     QList<ScriteFileInfo> m_fileInfoList; // excluding current document
+
+    QFutureWatcher<QList<ScriteFileInfo>>* m_futureWatcher = nullptr;
 };
 
 #endif // SCRITEDOCUMENTVAULT_H

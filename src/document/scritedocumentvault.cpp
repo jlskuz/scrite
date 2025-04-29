@@ -270,25 +270,22 @@ void ScriteDocumentVault::updateModelFromFolder()
 
     const QString futureWatcherName = QStringLiteral("ScriteDocumentVault::updateModelFromFolder");
 
-    QFutureWatcher<QList<ScriteFileInfo>> *futureWatcher =
-            this->findChild<QFutureWatcher<QList<ScriteFileInfo>> *>(futureWatcherName,
-                                                                     Qt::FindDirectChildrenOnly);
-    if (futureWatcher) {
-        futureWatcher->cancel();
-        futureWatcher->deleteLater();
+    if (m_futureWatcher) {
+        m_futureWatcher->cancel();
+        m_futureWatcher->deleteLater();
     }
 
-    futureWatcher = new QFutureWatcher<QList<ScriteFileInfo>>(this);
-    connect(futureWatcher, &QFutureWatcher<QList<ScriteFileInfo>>::finished, this, [=]() {
-        m_allFileInfoList = futureWatcher->result();
+    m_futureWatcher = new QFutureWatcher<QList<ScriteFileInfo>>(this);
+    connect(m_futureWatcher, &QFutureWatcher<QList<ScriteFileInfo>>::finished, this, [=]() {
+        m_allFileInfoList = m_futureWatcher->result();
         this->prepareModel();
-        futureWatcher->deleteLater();
+        m_futureWatcher->deleteLater();
     });
 
     const QString documentId = m_document ? m_document->documentId() : QString();
     const QFuture<QList<ScriteFileInfo>> future =
             QtConcurrent::run(fetchInfoAboutFilesInVault, documentId, m_folder, m_allFileInfoList);
-    futureWatcher->setFuture(future);
+    m_futureWatcher->setFuture(future);
 }
 
 void ScriteDocumentVault::updateModelFromFolderLater()

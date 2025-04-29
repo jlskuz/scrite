@@ -1218,6 +1218,8 @@ private:
     QObjectProperty<StructureElement> m_toElement;
     QObjectProperty<StructureElement> m_fromElement;
     QPointF m_suggestedLabelPosition;
+
+    QFutureWatcher<QPainterPath> *m_futureWatcher;
 };
 
 class StructureCanvasViewportFilterModel : public QSortFilterProxyModel

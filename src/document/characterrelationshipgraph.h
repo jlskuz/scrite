@@ -15,6 +15,7 @@
 #define CHARACTERRELATIONSHIPGRAPH_H
 
 #include <QQmlEngine>
+#include <QFutureWatcher>
 
 #include "structure.h"
 #include "graphlayout.h"
@@ -152,6 +153,8 @@ private:
     QObjectProperty<Relationship> m_relationship;
     QPointer<CharacterRelationshipGraphNode> m_toNode;
     QPointer<CharacterRelationshipGraphNode> m_fromNode;
+
+    QFutureWatcher<QPainterPath> *m_futureWatcher;
 };
 
 class CharacterRelationshipGraph : public QObject, public QQmlParserStatus

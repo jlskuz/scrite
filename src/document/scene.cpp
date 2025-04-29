@@ -2920,9 +2920,7 @@ void SceneSizeHintItem::timerEvent(QTimerEvent *te)
 
         const QString watcherName = QStringLiteral("SceneSizeHintItemFutureWatcher");
 
-        QFutureWatcher<SceneSizeHintItem_TaskResult> *watcher =
-                this->findChild<QFutureWatcher<SceneSizeHintItem_TaskResult> *>(watcherName);
-        if (watcher) {
+        if (m_futureWatcher) {
             this->updateSizeAndImageLater();
             return;
         }
@@ -2941,15 +2939,15 @@ void SceneSizeHintItem::timerEvent(QTimerEvent *te)
             static int taskResultTypeId = qRegisterMetaType<SceneSizeHintItem_TaskResult>();
             Q_UNUSED(taskResultTypeId)
 
-            watcher = new QFutureWatcher<SceneSizeHintItem_TaskResult>(this);
-            watcher->setObjectName(watcherName);
-            connect(watcher, &QFutureWatcher<SceneSizeHintItem_TaskResult>::finished, this, [=]() {
-                const SceneSizeHintItem_TaskResult result = watcher->result();
+            m_futureWatcher = new QFutureWatcher<SceneSizeHintItem_TaskResult>(this);
+            m_futureWatcher->setObjectName(watcherName);
+            connect(m_futureWatcher, &QFutureWatcher<SceneSizeHintItem_TaskResult>::finished, this, [=]() {
+                const SceneSizeHintItem_TaskResult result = m_futureWatcher->result();
                 m_documentImage = result.documentImage;
                 this->updateSize(result.documentSize);
                 this->update();
             });
-            connect(watcher, &QFutureWatcher<SceneSizeHintItem_TaskResult>::finished, watcher,
+            connect(m_futureWatcher, &QFutureWatcher<SceneSizeHintItem_TaskResult>::finished, m_futureWatcher,
                     &QObject::deleteLater);
 
             const QJsonObject sceneJson = QObjectSerializer::toJson(m_scene);
@@ -2958,7 +2956,7 @@ void SceneSizeHintItem::timerEvent(QTimerEvent *te)
             QFuture<SceneSizeHintItem_TaskResult> future =
                     QtConcurrent::run(SceneSizeHintItem_Task, window->effectiveDevicePixelRatio(),
                                       sceneJson, formatJson, true, this->isVisible());
-            watcher->setFuture(future);
+            m_futureWatcher->setFuture(future);
         } else {
             this->updateSizeAndImageNow();
         }

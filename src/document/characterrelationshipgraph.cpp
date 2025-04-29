@@ -196,26 +196,21 @@ void CharacterRelationshipGraphEdge::evaluatePath()
         const QRectF box1 = m_relationship->direction() == Relationship::WithOf ? r2 : r1;
         const QRectF box2 = m_relationship->direction() == Relationship::WithOf ? r1 : r2;
 
-        const QString futureName = QStringLiteral("curvedArrowFuture");
-        QFutureWatcher<QPainterPath> *futureWatcher =
-                this->findChild<QFutureWatcher<QPainterPath> *>(futureName,
-                                                                Qt::FindDirectChildrenOnly);
-        if (futureWatcher) {
-            futureWatcher->cancel();
-            futureWatcher->deleteLater();
+        if (m_futureWatcher) {
+            m_futureWatcher->cancel();
+            m_futureWatcher->deleteLater();
         }
 
-        futureWatcher = new QFutureWatcher<QPainterPath>(this);
-        futureWatcher->setObjectName(futureName);
-        connect(futureWatcher, &QFutureWatcher<QPainterPath>::finished, this, [=]() {
-            if (futureWatcher->isCanceled())
+        m_futureWatcher = new QFutureWatcher<QPainterPath>(this);
+        connect(m_futureWatcher, &QFutureWatcher<QPainterPath>::finished, this, [=]() {
+            if (m_futureWatcher->isCanceled())
                 return;
 
-            const QPainterPath path = futureWatcher->result();
+            const QPainterPath path = m_futureWatcher->result();
             this->setPath(path);
-            futureWatcher->deleteLater();
+            m_futureWatcher->deleteLater();
         });
-        futureWatcher->setFuture(QtConcurrent::run(&StructureElementConnector::curvedArrowPath,
+        m_futureWatcher->setFuture(QtConcurrent::run(&StructureElementConnector::curvedArrowPath,
                                                    box1, box2, 5, false));
     }
 }
