@@ -28,11 +28,13 @@
 #include "documentfilesystem.h"
 #include "qtextdocumentpagedprinter.h"
 
-class Forms;
-class FileLocker;
 class ScriteDocument;
+#include "form.h"
+#include "filelocker.h"
+
+Q_MOC_INCLUDE("abstractreportgenerator.h")
+Q_MOC_INCLUDE("abstractexporter.h")
 class AbstractExporter;
-class QFileSystemWatcher;
 class AbstractReportGenerator;
 
 class StructureElementConnectors : public QAbstractListModel
@@ -139,38 +141,6 @@ private:
     QFileSystemWatcher *m_fsWatcher = nullptr;
 };
 
-class ScriteDocumentCollaborators : public QAbstractListModel
-{
-    Q_OBJECT
-    QML_ELEMENT
-
-public:
-    explicit ScriteDocumentCollaborators(QObject *parent = nullptr);
-    ~ScriteDocumentCollaborators();
-
-    Q_PROPERTY(ScriteDocument* document READ document WRITE setDocument NOTIFY documentChanged)
-    void setDocument(ScriteDocument *val);
-    ScriteDocument *document() const { return m_document; }
-    Q_SIGNAL void documentChanged();
-
-    // QAbstractItemModel interface
-    enum { CollaboratorRole = Qt::UserRole, CollaboratorEmailRole, CollaboratorNameRole };
-    int rowCount(const QModelIndex &parent) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames() const;
-
-private:
-    int updateModel();
-    void fetchUsersInfo();
-    void updateModelAndFetchUsersInfoIfRequired();
-    void onCallFinished();
-
-private:
-    ScriteDocument *m_document = nullptr;
-    QJsonObject m_usersInfoMap;
-    int m_pendingFetchUsersInfoRequests = 0;
-    QList<QPair<QString, QString>> m_otherCollaborators;
-};
 
 class PageSetup : public QObject
 {
@@ -635,6 +605,39 @@ private:
 
     ErrorReport *m_errorReport = new ErrorReport(this);
     ProgressReport *m_progressReport = new ProgressReport(this);
+};
+
+class ScriteDocumentCollaborators : public QAbstractListModel
+{
+    Q_OBJECT
+    QML_ELEMENT
+
+public:
+    explicit ScriteDocumentCollaborators(QObject *parent = nullptr);
+    ~ScriteDocumentCollaborators();
+
+    Q_PROPERTY(ScriteDocument* document READ document WRITE setDocument NOTIFY documentChanged)
+    void setDocument(ScriteDocument *val);
+    ScriteDocument *document() const { return m_document; }
+    Q_SIGNAL void documentChanged();
+
+           // QAbstractItemModel interface
+    enum { CollaboratorRole = Qt::UserRole, CollaboratorEmailRole, CollaboratorNameRole };
+    int rowCount(const QModelIndex &parent) const;
+    QVariant data(const QModelIndex &index, int role) const;
+    QHash<int, QByteArray> roleNames() const;
+
+private:
+    int updateModel();
+    void fetchUsersInfo();
+    void updateModelAndFetchUsersInfoIfRequired();
+    void onCallFinished();
+
+private:
+    ScriteDocument *m_document = nullptr;
+    QJsonObject m_usersInfoMap;
+    int m_pendingFetchUsersInfoRequests = 0;
+    QList<QPair<QString, QString>> m_otherCollaborators;
 };
 
 #endif // SCRITEDOCUMENT_H

@@ -26,18 +26,18 @@
 #include <QJsonObject>
 #include <QApplication>
 #include <QVersionNumber>
+#include <QSettings>
+#include <QQuickItem>
 
 #include "undoredo.h"
 #include "errorreport.h"
 #include "transliteration.h"
 #include "qobjectlistmodel.h"
 #include "systemtextinputmanager.h"
+#include "form.h"
 
 typedef QApplication QtApplicationClass;
 
-class Forms;
-class QSettings;
-class QQuickItem;
 class AutoUpdate;
 class QNetworkConfigurationManager;
 
