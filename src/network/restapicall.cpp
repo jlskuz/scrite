@@ -29,6 +29,7 @@
 #include <QJsonDocument>
 #include <QNetworkReply>
 #include <QOperatingSystemVersion>
+#include <QRegularExpression>
 
 RestApi *RestApi::instance()
 {
@@ -197,7 +198,7 @@ bool RestApiCall::call()
 
     QString path =
             QStringLiteral("/") + QLatin1String(REST_API_ROOT) + QStringLiteral("/") + this->api();
-    path = path.replace(QRegExp(QStringLiteral("/+")), QStringLiteral("/"));
+    path = path.replace(QRegularExpression(QStringLiteral("/+")), QStringLiteral("/"));
 
     QUrl url = QUrl(QLatin1String(REST_API_URL));
     url.setPath(path);
