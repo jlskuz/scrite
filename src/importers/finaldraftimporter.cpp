@@ -14,7 +14,10 @@
 #include "finaldraftimporter.h"
 #include "application.h"
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
 #include <QXmlSimpleReader>
+#include <QXmlInputSource>
+#endif
 
 static void fixOmittedScenes(QDomElement &contentE);
 
@@ -56,15 +59,24 @@ bool FinalDraftImporter::doImport(QIODevice *device)
      * we will have to simply use these deprecated classes.
      */
 
+    QDomDocument doc;
+#if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
     QXmlInputSource xmlInputSource(device);
     QXmlSimpleReader xmlParser;
-
-    QDomDocument doc;
     if (!doc.setContent(&xmlInputSource, &xmlParser, &errMsg, &errLine, &errCol)) {
         const QString msg = QStringLiteral("Parse Error: %1 at Line %2, Column %3")
-                                    .arg(errMsg)
-                                    .arg(errLine)
-                                    .arg(errCol);
+        .arg(errMsg)
+                .arg(errLine)
+                .arg(errCol);
+#else
+    QDomDocument::ParseResult res = doc.setContent(device, QDomDocument::ParseOption::PreserveSpacingOnlyNodes);
+
+    if (!res) {
+        const QString msg = QStringLiteral("Parse Error: %1 at Line %2, Column %3")
+                                    .arg(res.errorMessage)
+                                    .arg(res.errorLine)
+                                    .arg(res.errorColumn);
+#endif
         this->error()->setErrorMessage(msg);
         return false;
     }
