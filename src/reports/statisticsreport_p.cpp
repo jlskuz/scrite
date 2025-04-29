@@ -28,6 +28,10 @@
 #include <QStackedBarSeries>
 #include <QGraphicsBlurEffect>
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+using namespace QtCharts;
+#endif
+
 /**
  * Note from Prashanth:
  * The code in this file (and its header) could be cleaner. I do hope
@@ -1282,7 +1286,7 @@ StatisticsReportDialogueActionRatio::StatisticsReportDialogueActionRatio(
 
     auto textDistrubution = report->textDistribution(true);
 
-    QtCharts::QChart *chart = new QtCharts::QChart(this);
+    QChart *chart = new QChart(this);
     chart->legend()->setVisible(false);
     chart->setMargins(QMargins(0, 0, 0, 0));
     chart->resize(chartSize, chartSize);
@@ -1295,16 +1299,16 @@ StatisticsReportDialogueActionRatio::StatisticsReportDialogueActionRatio(
     // I give up. I am going to manually put together a legend.
     StatisticsReportGraphVLegend *legend = new StatisticsReportGraphVLegend(this);
 
-    QtCharts::QPieSeries *pieSeries = new QtCharts::QPieSeries(chart);
+    QPieSeries *pieSeries = new QPieSeries(chart);
     for (const auto &dist : qAsConst(textDistrubution)) {
         const QColor color = StatisticsReport::pickColor(pieSeries->slices().size());
-        QtCharts::QPieSlice *slice = pieSeries->append(dist.key, dist.ratio);
+        QPieSlice *slice = pieSeries->append(dist.key, dist.ratio);
         slice->setBrush(color);
         slice->setLabel(dist.percent);
         slice->setLabelFont(smallFont);
         slice->setLabelColor(Application::textColorFor(color));
         slice->setLabelVisible(true);
-        slice->setLabelPosition(QtCharts::QPieSlice::LabelInsideNormal);
+        slice->setLabelPosition(QPieSlice::LabelInsideNormal);
         legend->add(color, dist.key);
     }
 
@@ -1410,12 +1414,12 @@ StatisticsReportSceneHeadingStats::StatisticsReportSceneHeadingStats(const Stati
     StatisticsReportGraphVLegend *typeLegend = new StatisticsReportGraphVLegend(this);
 
     // Pie chart for INT,EXT distribution
-    QtCharts::QChart *typeChart = new QtCharts::QChart(this);
+    QChart *typeChart = new QChart(this);
     typeChart->legend()->setVisible(false);
     typeChart->setMargins(QMargins(0, 0, 0, 0));
     typeChart->resize(chartSize, chartSize);
     typeChart->setBackgroundVisible(false);
-    QtCharts::QPieSeries *typeSeries = new QtCharts::QPieSeries(typeChart);
+    QPieSeries *typeSeries = new QPieSeries(typeChart);
     auto it1 = typeMap.vector.constBegin();
     auto end1 = typeMap.vector.constEnd();
     while (it1 != end1) {
@@ -1423,11 +1427,11 @@ StatisticsReportSceneHeadingStats::StatisticsReportSceneHeadingStats(const Stati
         const QColor color = StatisticsReport::pickColor(typeSeries->slices().size(), false);
         const QString label = QString::number(it1->second) + QStringLiteral(" Scenes: ")
                 + QString::number(percent) + QStringLiteral("%");
-        QtCharts::QPieSlice *slice = typeSeries->append(label, it1->second);
+        QPieSlice *slice = typeSeries->append(label, it1->second);
         slice->setBrush(color);
         slice->setLabel(label);
         slice->setLabelColor(Application::textColorFor(color));
-        slice->setLabelPosition(QtCharts::QPieSlice::LabelInsideNormal);
+        slice->setLabelPosition(QPieSlice::LabelInsideNormal);
         slice->setLabelVisible(true);
         slice->setLabelFont(tinyFont);
 
@@ -1442,10 +1446,10 @@ StatisticsReportSceneHeadingStats::StatisticsReportSceneHeadingStats(const Stati
     // Stacked bar chart for DAY, NIGHT etc..
     auto it2 = momentMap.vector.constBegin();
     auto end2 = momentMap.vector.constEnd();
-    QtCharts::QChart *momentChart = new QtCharts::QChart(this);
-    QtCharts::QStackedBarSeries *momentSeries = new QtCharts::QStackedBarSeries(momentChart);
-    QtCharts::QBarCategoryAxis *momentNameAxis = new QtCharts::QBarCategoryAxis(momentSeries);
-    QtCharts::QValueAxis *momentValueAxis = new QtCharts::QValueAxis(momentSeries);
+    QChart *momentChart = new QChart(this);
+    QStackedBarSeries *momentSeries = new QStackedBarSeries(momentChart);
+    QBarCategoryAxis *momentNameAxis = new QBarCategoryAxis(momentSeries);
+    QValueAxis *momentValueAxis = new QValueAxis(momentSeries);
     momentNameAxis->setVisible(true);
     momentNameAxis->setLabelsVisible(true);
     momentNameAxis->append(momentMap.keys());
@@ -1462,7 +1466,7 @@ StatisticsReportSceneHeadingStats::StatisticsReportSceneHeadingStats(const Stati
     momentSeries->attachAxis(momentNameAxis);
     momentSeries->attachAxis(momentValueAxis);
     momentSeries->setLabelsVisible(true);
-    momentSeries->setLabelsPosition(QtCharts::QStackedBarSeries::LabelsCenter);
+    momentSeries->setLabelsPosition(QStackedBarSeries::LabelsCenter);
 
     qreal categoryWidth = 60;
     QFontMetricsF fm(momentNameAxis->labelsFont());
@@ -1473,10 +1477,10 @@ StatisticsReportSceneHeadingStats::StatisticsReportSceneHeadingStats(const Stati
         int maxValue = 0;
         const QStringList types = typeColorMap.keys();
         for (const QString &type : types) {
-            QtCharts::QBarSet *barSet =
-                    momentSeries->findChild<QtCharts::QBarSet *>(type, Qt::FindDirectChildrenOnly);
+            QBarSet *barSet =
+                    momentSeries->findChild<QBarSet *>(type, Qt::FindDirectChildrenOnly);
             if (barSet == nullptr) {
-                barSet = new QtCharts::QBarSet(type, momentSeries);
+                barSet = new QBarSet(type, momentSeries);
                 barSet->setObjectName(type);
                 barSet->setColor(typeColorMap.value(type));
                 barSet->setLabelFont(smallFont);
@@ -1503,10 +1507,10 @@ StatisticsReportSceneHeadingStats::StatisticsReportSceneHeadingStats(const Stati
     // Another pie chart for locations (legend only for top-5 locations)
     auto it3 = locationMap.vector.constBegin();
     auto end3 = locationMap.vector.constEnd();
-    QtCharts::QChart *locationChart = new QtCharts::QChart(this);
-    QtCharts::QStackedBarSeries *locationSeries = new QtCharts::QStackedBarSeries(locationChart);
-    QtCharts::QBarCategoryAxis *locationNameAxis = new QtCharts::QBarCategoryAxis(locationSeries);
-    QtCharts::QValueAxis *locationValueAxis = new QtCharts::QValueAxis(locationSeries);
+    QChart *locationChart = new QChart(this);
+    QStackedBarSeries *locationSeries = new QStackedBarSeries(locationChart);
+    QBarCategoryAxis *locationNameAxis = new QBarCategoryAxis(locationSeries);
+    QValueAxis *locationValueAxis = new QValueAxis(locationSeries);
     locationNameAxis->setVisible(true);
     locationNameAxis->setLabelsVisible(true);
     locationNameAxis->setLabelsFont(smallFont);
@@ -1518,9 +1522,9 @@ StatisticsReportSceneHeadingStats::StatisticsReportSceneHeadingStats(const Stati
     locationChart->setMargins(QMargins(0, 0, 0, 0));
     locationChart->setBackgroundVisible(false);
     locationSeries->setLabelsVisible(true);
-    locationSeries->setLabelsPosition(QtCharts::QStackedBarSeries::LabelsCenter);
+    locationSeries->setLabelsPosition(QStackedBarSeries::LabelsCenter);
 
-    QtCharts::QBarSet *locationBarSet = new QtCharts::QBarSet(QString(), locationSeries);
+    QBarSet *locationBarSet = new QBarSet(QString(), locationSeries);
     locationBarSet->setColor(QColor("#864879"));
     locationSeries->append(locationBarSet);
     locationBarSet->setLabelFont(tinyFont);
