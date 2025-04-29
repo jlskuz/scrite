@@ -19,6 +19,7 @@
 #include <QTextBlock>
 #include <QTextDocument>
 #include <QtDebug>
+#include <QFile>
 
 namespace Fountain {
 static bool resolveEmphasis(const QString &input, QString &plainText,
@@ -956,7 +957,9 @@ QString Fountain::Writer::toString() const
     QString ret;
 
     QTextStream ts(&ret, QIODevice::WriteOnly);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ts.setCodec("utf-8");
+#endif
     ts.setAutoDetectUnicode(true);
 
     for (const QPair<QString, QString> &item : m_titlePage) {

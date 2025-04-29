@@ -319,7 +319,9 @@ bool SceneCharacterMatrixReport::directExportToOdf(QIODevice *device)
 
     QTextStream ts(device);
     ts.setAutoDetectUnicode(true);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ts.setCodec("utf-8");
+#endif
 
     const int nrRows =
             m_type == SceneVsCharacter ? screenplayElements.size() : m_characterNames.size();
