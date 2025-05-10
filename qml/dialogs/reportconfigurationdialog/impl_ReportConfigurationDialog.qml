@@ -34,18 +34,8 @@ VclDialog {
     height: Math.min(Scrite.window.height*0.9, 650)
     title: report ? report.title : "Report Configuration Dialog"
 
-    content: report && visible ? (_private.reportEnabled ? reportConfigContent : reportFeatureDisabledContent) : null
+    content: report && visible ? reportConfigContent : null
     bottomBar: report && visible && _private.reportEnabled ? generateButtonBar : null
-
-    // Show this component if the report feature is disabled for the current user
-    Component {
-        id: reportFeatureDisabledContent
-
-        DisabledFeatureNotice {
-            color: Qt.rgba(1,1,1,0.9)
-            featureName: report.title
-        }
-    }
 
     // Show this component if the report is enabled for the current user
     Component {

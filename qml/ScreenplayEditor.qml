@@ -1928,13 +1928,6 @@ Rectangle {
                                     contentY = cy
                                 }
                             }
-
-                            DisabledFeatureNotice {
-                                color: Qt.rgba(0,0,0,0)
-                                anchors.fill: parent
-                                visible: !Runtime.appFeatures.structure.enabled
-                                featureName: "Index Card Fields"
-                            }
                         }
                     }
                 }

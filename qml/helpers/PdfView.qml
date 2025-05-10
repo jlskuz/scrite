@@ -233,11 +233,7 @@ Item {
                 visible: (allowFileSave || saveFeatureDisabled)
                 icon.source: "qrc:/icons/file/file_download.png"
 
-                onClicked: {
-                    if(saveFeatureDisabled)
-                        saveDisabledNotice.open()
-                    else
-                        saveMenu.open()
+                onClicked: saveMenu.open()
                 }
 
                 Item {
@@ -348,18 +344,6 @@ Item {
             const downloadedFilePath = Scrite.app.copyFile( Scrite.app.urlToLocalFile(pdfDoc.source), targetFilePath )
             if(downloadedFilePath !== "")
                 Scrite.app.revealFileOnDesktop(downloadedFilePath)
-        }
-    }
-
-    VclDialog {
-        id: saveDisabledNotice
-
-        width: 640
-        height: 480
-        title: "Feature Missing"
-
-        content: DisabledFeatureNotice {
-            featureName: "Saving PDF Files"
         }
     }
 

@@ -1609,12 +1609,6 @@ Item {
                                 visible: !Runtime.showNotebookInStructure || structureEditorTabs.currentTabIndex === 0
                                 active: Runtime.appFeatures.structure.enabled
                                 sourceComponent: StructureView { }
-
-                                DisabledFeatureNotice {
-                                    anchors.fill: parent
-                                    visible: !parent.active
-                                    featureName: "Structure"
-                                }
                             }
 
                             Loader {
@@ -1629,12 +1623,6 @@ Item {
                                     toolbarSize: appToolBar.height+4
                                     toolbarSpacing: appToolBar.spacing
                                     toolbarLeftMargin: appToolBar.anchors.leftMargin
-                                }
-
-                                DisabledFeatureNotice {
-                                    anchors.fill: parent
-                                    visible: !parent.active
-                                    featureName: "Notebook"
                                 }
                             }
                         }
@@ -1883,12 +1871,6 @@ Item {
             active: Runtime.appFeatures.scrited.enabled
             sourceComponent: ScritedView {
 
-            }
-
-            DisabledFeatureNotice {
-                anchors.fill: parent
-                visible: !parent.active
-                featureName: "Scrited"
             }
         }
     }

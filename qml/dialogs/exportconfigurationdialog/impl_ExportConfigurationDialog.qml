@@ -34,18 +34,8 @@ VclDialog {
     height: Math.min(Scrite.window.height*0.9, 600)
     title: exporter ? ("Export to " + exporter.formatName) : "Export Configuration Dialog"
 
-    content: visible ? (_private.exportEnabled ? exportConfigContent : exportFeatureDisabledContent) : null
-    bottomBar: visible && _private.exportEnabled ? exportButtonFooter : null
-
-    // Show this component if the exporter feature is disabled for the user
-    Component {
-        id: exportFeatureDisabledContent
-
-        DisabledFeatureNotice {
-            color: Qt.rgba(1,1,1,0.9)
-            featureName: exporter.format
-        }
-    }
+    content: visible ? exportConfigContent : null
+    bottomBar: visible ? exportButtonFooter : null
 
     // Show this component if the exporter is enabled for the current user
     Component {

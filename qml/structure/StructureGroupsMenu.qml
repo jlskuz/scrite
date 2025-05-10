@@ -208,14 +208,6 @@ VclMenu {
                     onClicked: StructureStoryBeatsDialog.launch()
                 }
             }
-
-            DisabledFeatureNotice {
-                anchors.fill: parent
-                color: Qt.rgba(1,1,1,0.8)
-                visible: !Runtime.appFeatures.structure.enabled
-                featureName: "Structure Tagging"
-                onClicked: structureGroupsMenu.close()
-            }
         }
     }
 }

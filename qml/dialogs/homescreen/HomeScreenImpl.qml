@@ -931,12 +931,6 @@ Item {
             anchors.fill: parent
             currentIndex: Runtime.appFeatures.importer.enabled ? (fileToImport.valid ? 2 : 1) : 0
 
-            DisabledFeatureNotice {
-                visible: !Runtime.appFeatures.importer.enabled
-                color: Qt.rgba(1,1,1,0.9)
-                featureName: "Import from 3rd Party Formats"
-            }
-
             Rectangle {
                 id: dropBrowseItem
                 border.width: 1

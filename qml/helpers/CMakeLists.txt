@@ -18,7 +18,6 @@ ecm_target_qml_sources(scritehelpers
         ColorMenu.qml
         ColorToolButton.qml
         DialogLauncher.qml
-        DisabledFeatureNotice.qml
         FileSelector.qml
         FlatToolButton.qml
         FlickableTextArea.qml

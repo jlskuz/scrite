@@ -39,11 +39,6 @@ Item {
         return "Hi, there."
     }
 
-    Component.onCompleted: {
-        if(Scrite.user.loggedIn)
-            Runtime.showHelpTip("UserProfileDialog")
-    }
-
     PageView {
         id: userProfilePageView
         anchors.fill: parent

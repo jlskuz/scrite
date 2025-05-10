@@ -1268,13 +1268,6 @@ Rectangle {
                             }
                         }
                     }
-
-                    DisabledFeatureNotice {
-                        color: Qt.rgba(0,0,0,0)
-                        anchors.fill: parent
-                        visible: !Runtime.appFeatures.characterRelationshipGraph.enabled
-                        featureName: "Relationship Map"
-                    }
                 }
 
                 Loader {
@@ -2400,13 +2393,6 @@ Rectangle {
                             }
                         }
                     }
-
-                    DisabledFeatureNotice {
-                        color: Qt.rgba(0,0,0,0)
-                        anchors.fill: parent
-                        visible: !Runtime.appFeatures.characterRelationshipGraph.enabled
-                        featureName: "Relationship Map"
-                    }
                 }
             }
         }
@@ -3018,13 +3004,6 @@ Rectangle {
                         }
                         Component.onCompleted: Utils.execLater(characterTabContentArea, 100, prepare)
                         onVisibleChanged: Utils.execLater(characterTabContentArea, 100, prepare)
-                    }
-
-                    DisabledFeatureNotice {
-                        color: Qt.rgba(0,0,0,0)
-                        anchors.fill: parent
-                        visible: !Runtime.appFeatures.characterRelationshipGraph.enabled
-                        featureName: "Relationship Map"
                     }
                 }
 
