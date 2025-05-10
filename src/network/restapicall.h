@@ -677,26 +677,6 @@ protected:
     void setResponse(const QJsonObject &val);
 };
 
-class SubscriptionPlansRestApiCall : public RestApiCall
-{
-    Q_OBJECT
-    QML_ELEMENT
-
-public:
-    SubscriptionPlansRestApiCall(QObject *parent = nullptr);
-    ~SubscriptionPlansRestApiCall();
-
-    Q_PROPERTY(QJsonArray plans READ plans NOTIFY responseChanged)
-    QJsonArray plans() const;
-
-    Q_PROPERTY(QJsonArray subscriptionHistory READ subscriptionHistory NOTIFY responseChanged)
-    QJsonArray subscriptionHistory() const;
-
-    // RestApiCall interface
-    Type type() const { return GET; }
-    bool useSessionToken() const { return true; }
-    QString api() const { return "subscription/plans"; }
-};
 
 class SubscriptionReferralCodeRestApiCall : public RestApiCall
 {
@@ -744,25 +724,6 @@ public:
 
 private:
     QString m_reason;
-};
-
-class SubscriptionPlanActivationRestApiCall : public RestApiCall
-{
-    Q_OBJECT
-    QML_ELEMENT
-
-public:
-    SubscriptionPlanActivationRestApiCall(QObject *parent = nullptr);
-    ~SubscriptionPlanActivationRestApiCall();
-
-    Q_PROPERTY(QString activationApi READ api WRITE setApi NOTIFY apiChanged)
-
-    // RestApiCall interface
-    Type type() const { return POST; }
-    bool useSessionToken() const { return true; }
-
-protected:
-    void setResponse(const QJsonObject &val);
 };
 
 class AbstractScriptalayRestApiCall : public RestApiCall

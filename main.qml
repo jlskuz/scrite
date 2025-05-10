@@ -53,14 +53,11 @@ Rectangle {
         function initialize() {
             // Initialize runtime
             Runtime.init(scriteRoot)
-            SubscriptionPlanOperations.init(scriteRoot)
 
             // Determine font size provided by QML
             determineDefaultFontSize()
 
             // Initialize layers
-            SubscriptionDetailsDialog.init()
-            SubscriptionPlanComparisonDialog.init()
             UserAccountDialog.init(scriteRoot)
             FloatingDockLayer.init(scriteRoot)
             OverlaysLayer.init(scriteRoot)

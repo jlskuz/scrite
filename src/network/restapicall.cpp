@@ -997,22 +997,6 @@ void SessionNewRestApiCall::setResponse(const QJsonObject &val)
         ::ActiveSessionNewRestApiCall = nullptr;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
-SubscriptionPlansRestApiCall::SubscriptionPlansRestApiCall(QObject *parent)
-    : RestApiCall(parent) { }
-
-SubscriptionPlansRestApiCall::~SubscriptionPlansRestApiCall() { }
-
-QJsonArray SubscriptionPlansRestApiCall::plans() const
-{
-    return this->responseData().value("plans").toArray();
-}
-
-QJsonArray SubscriptionPlansRestApiCall::subscriptionHistory() const
-{
-    return this->responseData().value("subscriptions").toArray();
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -1058,24 +1042,6 @@ void SubscriptionTrialDeclineReasonApiCall::setReason(const QString &val)
 QJsonObject SubscriptionTrialDeclineReasonApiCall::data() const
 {
     return { { "reason", m_reason } };
-}
-
-///////////////////////////////////////////////////////////////////////////////
-
-SubscriptionPlanActivationRestApiCall::SubscriptionPlanActivationRestApiCall(QObject *parent)
-    : RestApiCall(parent)
-{
-}
-
-SubscriptionPlanActivationRestApiCall::~SubscriptionPlanActivationRestApiCall() { }
-
-void SubscriptionPlanActivationRestApiCall::setResponse(const QJsonObject &val)
-{
-    RestApiCall::setResponse(val);
-
-    SessionNewRestApiCall *api = new SessionNewRestApiCall(User::instance());
-    if (!api->call())
-        api->deleteLater();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

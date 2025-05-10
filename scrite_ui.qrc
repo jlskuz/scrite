@@ -79,7 +79,6 @@
         <file>qml/dialogs/TitlePageDialog.qml</file>
         <file>qml/dialogs/UserAccountDialog.qml</file>
         <file>qml/dialogs/useraccountdialog/AccountEmailScreen.qml</file>
-        <file>qml/dialogs/useraccountdialog/ActivationCodeScreen.qml</file>
         <file>qml/dialogs/useraccountdialog/JunctionScreen.qml</file>
         <file>qml/dialogs/useraccountdialog/PlanCard.qml</file>
         <file>qml/dialogs/useraccountdialog/ReloadUserScreen.qml</file>
@@ -175,9 +174,5 @@
         <file>qml/tasks/qmldir</file>
         <file>qml/tasks/SaveFileTask.qml</file>
         <file>qml/TimelineView.qml</file>
-        <file>qml/dialogs/SubscriptionPlanComparisonDialog.qml</file>
-        <file>qml/globals/SubscriptionPlanOperations.qml</file>
-        <file>qml/dialogs/SubscriptionDetailsDialog.qml</file>
-        <file>qml/dialogs/TrialNotActivatedDialog.qml</file>
     </qresource>
 </RCC>
