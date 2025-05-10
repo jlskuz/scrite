@@ -18,9 +18,9 @@ import QtQuick.Controls 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
-import "qrc:/qml/helpers"
-import "qrc:/qml/controls"
+import io.scrite.globals
+import io.scrite.helpers
+import io.scrite.controls
 
 /**
   This item is used for highlighting UI elements to educate users about where

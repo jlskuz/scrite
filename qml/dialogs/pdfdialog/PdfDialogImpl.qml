@@ -14,16 +14,16 @@
 import QtQuick 2.15
 import QtQuick.Pdf 5.15
 import QtQuick.Window 2.15
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
-import "qrc:/qml/helpers"
-import "qrc:/qml/controls"
+import io.scrite.globals
+import io.scrite.helpers
+import io.scrite.controls
 
 VclDialog {
     id: root

@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 
     AppWindow scriteWindow;
     QTimer::singleShot(0, &scriteWindow, [&scriteWindow]() {
-        scriteWindow.setSource(QUrl("qrc:/main.qml"));
+        scriteWindow.loadFromModule("io.scrite.main", "Main");
         scriteWindow.show();
     });
 

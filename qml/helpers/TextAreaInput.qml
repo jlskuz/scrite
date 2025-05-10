@@ -17,15 +17,16 @@ import QtQuick.Controls.Material 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
-import "qrc:/qml/controls"
+import io.scrite.globals
+import io.scrite.controls
 
 TextArea {
     id: txtAreaInput
     property bool undoRedoEnabled: false
     property bool spellCheckEnabled: Runtime.screenplayEditorSettings.enableSpellCheck
 
-    palette: Scrite.app.palette
+    // TODO: https://bugreports.qt.io/browse/QTBUG-111396
+    //palette: Scrite.app.palette
     selectByKeyboard: true
     selectByMouse: true
     // renderType: Text.NativeRendering

@@ -17,8 +17,8 @@ import QtQuick.Controls.Material 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
-import "qrc:/qml/controls"
+import io.scrite.globals
+import io.scrite.controls
 
 Rectangle {
     id: busyOverlay

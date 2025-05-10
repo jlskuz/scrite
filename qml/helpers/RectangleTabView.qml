@@ -14,8 +14,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-import "qrc:/qml/globals"
-import "qrc:/qml/controls"
+import io.scrite.globals
+import io.scrite.controls
 
 Item {
     property alias tabsArray: tabRepeater.model

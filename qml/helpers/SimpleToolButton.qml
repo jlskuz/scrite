@@ -15,7 +15,7 @@ import QtQuick 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
+import io.scrite.globals
 
 Rectangle {
     id: root

@@ -15,7 +15,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 
-import "qrc:/qml/globals"
+import io.scrite.globals
 
 ToolButton {
     id: toolButton

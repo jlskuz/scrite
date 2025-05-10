@@ -13,7 +13,7 @@
 
 import QtQml 2.15
 import QtQuick 2.15
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
 import QtQuick.Window 2.15
 import Qt.labs.settings 1.0
 import QtQuick.Controls 2.15
@@ -22,14 +22,14 @@ import QtQuick.Controls.Material 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/js/utils.js" as Utils
-import "qrc:/qml/globals"
-import "qrc:/qml/dialogs"
-import "qrc:/qml/controls"
-import "qrc:/qml/helpers"
-import "qrc:/qml/structure"
-import "qrc:/qml/screenplay"
-import "qrc:/qml/floatingdockpanels"
+import io.scrite.main as Utils
+import io.scrite.globals
+import io.scrite.dialogs
+import io.scrite.controls
+import io.scrite.helpers
+import io.scrite.structure
+import io.scrite.screenplay
+import io.scrite.floatingdockpanels
 
 Rectangle {
     // This editor has to specialize in rendering scenes within a ScreenplayAdapter

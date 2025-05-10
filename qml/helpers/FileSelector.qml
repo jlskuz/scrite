@@ -12,13 +12,13 @@
 ****************************************************************************/
 
 import QtQuick 2.15
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
 import QtQuick.Controls 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
-import "qrc:/qml/controls"
+import io.scrite.globals
+import io.scrite.controls
 
 Item {
     id: fileSelector

@@ -17,9 +17,9 @@ import QtQuick.Controls 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
-import "qrc:/qml/controls"
-import "qrc:/qml/helpers"
+import io.scrite.globals
+import io.scrite.controls
+import io.scrite.helpers
 
 RowLayout {
     id: root

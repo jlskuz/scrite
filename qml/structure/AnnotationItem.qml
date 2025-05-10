@@ -15,7 +15,7 @@ import QtQuick 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
+import io.scrite.globals
 
 // For use from within StructureView only!!!!
 // Because we assume the existence of 'annotation' and 'annotationGripLoader'

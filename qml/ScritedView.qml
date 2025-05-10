@@ -13,8 +13,8 @@
 
 import QtQml 2.15
 import QtQuick 2.15
-import QtMultimedia 5.15
-import QtQuick.Dialogs 1.3
+import QtMultimedia
+import QtQuick.Dialogs
 import QtQuick.Layouts 1.15
 import Qt.labs.settings 1.0
 import QtQuick.Controls 2.15
@@ -22,12 +22,12 @@ import QtQuick.Controls.Material 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/js/utils.js" as Utils
-import "qrc:/qml/globals"
-import "qrc:/qml/controls"
-import "qrc:/qml/helpers"
-import "qrc:/qml/dialogs"
-import "qrc:/qml/scrited"
+import io.scrite.main as Utils
+import io.scrite.globals
+import io.scrite.controls
+import io.scrite.helpers
+import io.scrite.dialogs
+import io.scrite.scrited
 
 Item {
     id: scritedView

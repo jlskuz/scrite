@@ -15,7 +15,7 @@ import QtQuick 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/qml/globals"
+import io.scrite.globals
 
 QtObject {
     id: root
@@ -27,7 +27,7 @@ QtObject {
 
     Notification.title: helpTip ? helpTip.title : ""
     Notification.image: helpTip ? helpTip.image.url : ""
-    Notification.active: enabled && helpTip && !tipShown
+    Notification.active: enabled && Boolean(helpTip) && !tipShown
     Notification.text: helpTip ? helpTip.text : ""
     Notification.autoClose: false
     Notification.closeOnButtonClick: false

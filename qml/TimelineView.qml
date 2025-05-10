@@ -18,12 +18,12 @@ import QtQuick.Controls 2.15
 
 import io.scrite.components 1.0
 
-import "qrc:/js/utils.js" as Utils
+import io.scrite.main as Utils
 
-import "qrc:/qml/globals"
-import "qrc:/qml/controls"
-import "qrc:/qml/helpers"
-import "qrc:/qml/screenplay"
+import io.scrite.globals
+import io.scrite.controls
+import io.scrite.helpers
+import io.scrite.screenplay
 
 Item {
     id: screenplayView
