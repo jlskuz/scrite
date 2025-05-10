@@ -17,7 +17,7 @@ import QtQuick.Dialogs
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 
-import io.scrite.components 1.0
+import io.scrite.components
 
 import io.scrite.globals
 import io.scrite.controls

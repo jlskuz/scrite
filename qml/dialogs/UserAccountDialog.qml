@@ -20,7 +20,7 @@ import Qt.labs.settings 1.0
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
-import io.scrite.components 1.0
+import io.scrite.components
 
 import io.scrite.main as Utils
 import io.scrite.globals

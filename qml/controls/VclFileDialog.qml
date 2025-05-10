@@ -14,7 +14,7 @@
 import QtQuick 2.15
 import QtQuick.Dialogs
 
-import io.scrite.components 1.0
+import io.scrite.components
 
 import io.scrite.globals
 

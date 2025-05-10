@@ -15,7 +15,7 @@ pragma Singleton
 
 import QtQuick 2.15
 
-import io.scrite.components 1.0
+import io.scrite.components
 
 QtObject {
     id: root

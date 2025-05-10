@@ -20,7 +20,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Controls 1.4 as OldControls
 
-import io.scrite.components 1.0
+import io.scrite.components
 
 import io.scrite.main as Utils
 import io.scrite.globals
