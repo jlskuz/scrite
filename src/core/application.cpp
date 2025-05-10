@@ -964,11 +964,6 @@ QColor Application::translucent(const QColor &input, qreal alpha)
     return ret;
 }
 
-AutoUpdate *Application::autoUpdate() const
-{
-    return AutoUpdate::instance();
-}
-
 QJsonObject Application::objectConfigurationFormInfo(const QObject *object, const QMetaObject *from)
 {
     QJsonObject ret;

@@ -35,6 +35,5 @@ QtObject {
         item.visible = _parent
 
         NotificationsView.init()
-        AutoUpdateNotifications.init()
     }
 }

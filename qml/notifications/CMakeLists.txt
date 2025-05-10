@@ -7,7 +7,6 @@ ecm_add_qml_module(scritenotifications
 )
 
 set(qml_singletons
-    AutoUpdateNotifications.qml
     NotificationsLayer.qml
     NotificationsView.qml
 )

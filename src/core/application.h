@@ -38,7 +38,6 @@
 
 typedef QApplication QtApplicationClass;
 
-class AutoUpdate;
 class QNetworkConfigurationManager;
 
 class Application : public QtApplicationClass
@@ -232,9 +231,6 @@ public:
     Q_INVOKABLE static void rollbackOverrideCursor();
 
     QSettings *settings() const { return m_settings; }
-
-    Q_PROPERTY(AutoUpdate *autoUpdate READ autoUpdate CONSTANT)
-    AutoUpdate *autoUpdate() const;
 
     Q_INVOKABLE static QJsonObject objectConfigurationFormInfo(const QObject *object,
                                                                const QMetaObject *from = nullptr);
