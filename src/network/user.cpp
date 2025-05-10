@@ -136,23 +136,7 @@ UserInfo::UserInfo(const QJsonObject &object)
         this->installations << info;
     }
 
-    const QJsonArray _subscriptions = object.value("subscriptions").toArray();
-    for (const QJsonValue &_subscription : _subscriptions) {
-        UserSubscriptionInfo info(_subscription.toObject());
-        this->subscriptions << info;
-    }
-
-    const QJsonValue pbs = object.value("publicBetaSubscription");
-    if (pbs.isObject())
-        this->publicBetaSubscription = UserSubscriptionInfo(pbs.toObject());
-
     this->activeInstallationCount = object.value("activeInstallationCount").toInt();
-    this->hasActiveSubscription = object.value("hasActiveSubscription").toBool();
-    this->hasUpcomingSubscription = object.value("hasUpcomingSubscription").toBool();
-    this->hasTrialSubscription = object.value("hasTrialSubscription").toBool();
-    this->paidSubscriptionCount = object.value("paidSubscriptionCount").toBool();
-    this->subscribedUntil =
-            QDateTime::fromString(object.value("subscribedUntil").toString(), Qt::ISODateWithMs);
     this->isEarlyAdopter = object.value("isEarlyAdopter").toBool();
 
     this->availableFeatures = JsonArrayToStringList(object.value("availableFeatures").toArray());

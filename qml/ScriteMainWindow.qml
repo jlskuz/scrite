@@ -55,7 +55,7 @@ Item {
     Shortcut {
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Shift+S"
-        enabled: Runtime.allowAppUsage
+        enabled: true
         onActivated: SaveFileTask.saveAs()
 
         ShortcutsModelItem.group: "File"
@@ -64,7 +64,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+N"
         onActivated: HomeScreen.launch()
@@ -75,7 +75,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+O"
         onActivated: HomeScreen.launch()
@@ -86,7 +86,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+P"
 
@@ -97,7 +97,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "F1"
 
@@ -109,7 +109,7 @@ Item {
 
     Shortcut {
         id: sceneCharactersToggleShortcut
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Alt+C"
         ShortcutsModelItem.group: "Settings"
@@ -120,7 +120,7 @@ Item {
 
     Shortcut {
         id: synopsisToggleShortcut
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Alt+S"
         ShortcutsModelItem.group: "Settings"
@@ -131,7 +131,7 @@ Item {
 
     Shortcut {
         id: commentsToggleShortcut
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Alt+M"
         ShortcutsModelItem.group: "Settings"
@@ -142,7 +142,7 @@ Item {
 
     Shortcut {
         id: taggingToggleShortcut
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Alt+G"
         ShortcutsModelItem.group: "Settings"
@@ -153,7 +153,7 @@ Item {
 
     Shortcut {
         id: spellCheckToggleShortcut
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Alt+L"
         ShortcutsModelItem.group: "Settings"
@@ -163,7 +163,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Alt+A"
         ShortcutsModelItem.group: "Settings"
@@ -173,7 +173,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Shift+H"
         ShortcutsModelItem.group: "Settings"
@@ -183,7 +183,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+M"
         ShortcutsModelItem.group: "Application"
@@ -195,7 +195,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Alt+1"
         ShortcutsModelItem.group: "Application"
@@ -205,7 +205,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Alt+2"
         ShortcutsModelItem.group: "Application"
@@ -220,7 +220,7 @@ Item {
 
     Shortcut {
         id: notebookShortcut
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Alt+3"
         ShortcutsModelItem.group: "Application"
@@ -267,7 +267,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Shift+K"
         onActivated: notebookShortcut.showBookmarkedNotes()
@@ -279,7 +279,7 @@ Item {
     }
 
     Shortcut {
-        enabled: Runtime.allowAppUsage
+        enabled: true
         context: Qt.ApplicationShortcut
         sequence: "Ctrl+Shift+R"
         onActivated: notebookShortcut.showCharacterNotes()
@@ -292,7 +292,7 @@ Item {
 
     Shortcut {
         context: Qt.ApplicationShortcut
-        enabled: Runtime.allowAppUsage
+        enabled: true
         sequence: "Ctrl+Shift+Y"
         onActivated: notebookShortcut.showStoryNotes()
 
@@ -305,7 +305,7 @@ Item {
     Shortcut {
         context: Qt.ApplicationShortcut
         sequence: "Alt+4"
-        enabled: Runtime.workspaceSettings.showScritedTab && Runtime.allowAppUsage
+        enabled: Runtime.workspaceSettings.showScritedTab && true
         ShortcutsModelItem.group: "Application"
         ShortcutsModelItem.title: "Scrited"
         ShortcutsModelItem.shortcut: sequence
@@ -562,7 +562,7 @@ Item {
                             ShortcutsModelItem.enabled: appToolBar.visible
 
                             Shortcut {
-                                enabled: Runtime.allowAppUsage
+                                enabled: true
                                 context: Qt.ApplicationShortcut
                                 sequence: "Ctrl+,"
                                 onActivated: SettingsDialog.launch()
@@ -588,7 +588,7 @@ Item {
                             ShortcutsModelItem.enabled: appToolBar.visible
 
                             Shortcut {
-                                enabled: Runtime.allowAppUsage
+                                enabled: true
                                 context: Qt.ApplicationShortcut
                                 sequence: "Ctrl+E"
                                 onActivated: Runtime.shortcutsDockWidgetSettings.visible = !Runtime.shortcutsDockWidgetSettings.visible
@@ -615,7 +615,7 @@ Item {
                             ShortcutsModelItem.title: "Toggle Fullscreen"
                             ShortcutsModelItem.shortcut: "F7"
                             Shortcut {
-                                enabled: Runtime.allowAppUsage
+                                enabled: true
                                 context: Qt.ApplicationShortcut
                                 sequence: "F7"
                                 onActivated: Utils.execLater(Scrite.app, 100, function() { Scrite.app.toggleFullscreen(Scrite.window) })
@@ -690,7 +690,7 @@ Item {
                         Item {
                             Shortcut {
                                 property string shortcutKey: Scrite.app.transliterationEngine.shortcutLetter(modelData.value)
-                                enabled: Runtime.allowAppUsage && Scrite.app.transliterationEngine.enabledLanguages.indexOf(modelData.value) >= 0
+                                enabled: true && Scrite.app.transliterationEngine.enabledLanguages.indexOf(modelData.value) >= 0
                                 context: Qt.ApplicationShortcut
                                 sequence: "Alt+"+shortcutKey
                                 onActivated: {
@@ -711,7 +711,7 @@ Item {
                     Shortcut {
                         context: Qt.ApplicationShortcut
                         sequence: "F10"
-                        enabled: Runtime.allowAppUsage
+                        enabled: true
                         onActivated: {
                             Scrite.app.transliterationEngine.cycleLanguage()
                             Scrite.document.formatting.defaultLanguage = Scrite.app.transliterationEngine.language

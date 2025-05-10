@@ -110,7 +110,6 @@ bool AbstractExporter::write(AbstractExporter::Target target)
 
     auto guard = qScopeGuard([=]() {
         const QString exporterName = QString::fromLatin1(this->metaObject()->className());
-        User::instance()->logActivity2(QStringLiteral("export"), exporterName);
     });
 
     const QMetaObject *mo = this->metaObject();

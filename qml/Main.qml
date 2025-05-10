@@ -41,7 +41,7 @@ Rectangle {
 
     ScriteMainWindow {
         anchors.fill: parent
-        enabled: !NotificationsView.visible && Runtime.allowAppUsage
+        enabled: !NotificationsView.visible
     }
 
     // Private Section
@@ -68,7 +68,7 @@ Rectangle {
 
             // Show initial UI
             // if(Scrite.user.loggedIn) {
-            //     if(Runtime.allowAppUsage)
+            //     if(true)
             //         showHomeScreenOrOpenFile()
             //     else
             //         UserAccountDialog.launch()
@@ -98,10 +98,8 @@ Rectangle {
                     "The Windows version of Scrite works best on Windows 10 or higher. While it may work on earlier versions of Windows, we don't actively test on them. We recommend that you use Scrite on PCs with Windows 10 or higher.",
                     _private.showHomeScreenOrOpenFile
                 )
-            } else if(Runtime.allowAppUsage)
+            } else
                 showHomeScreenOrOpenFile()
-            else
-                UserAccountDialog.launch()
         }
 
         function showHomeScreenOrOpenFile() {

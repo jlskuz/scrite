@@ -145,7 +145,6 @@ bool AbstractReportGenerator::generate()
 
     auto guard = qScopeGuard([=]() {
         const QString reportName = QString::fromLatin1(this->metaObject()->className());
-        User::instance()->logActivity2(QStringLiteral("report"), reportName);
     });
 
     const bool usePdfWriter = this->usePdfWriter();

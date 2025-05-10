@@ -41,8 +41,6 @@ Item {
     property bool showNotebookInStructure: workspaceSettings.showNotebookInStructure && canShowNotebookInStructure
     property bool firstSwitchToStructureTab: true // This is different from screenplayEditorSettings.firstSwitchToStructureTab
     property ObjectListModel dialogs: ObjectListModel { }
-    property bool allowAppUsage: Scrite.user.loggedIn && Scrite.user.info.hasActiveSubscription
-    readonly property int subscriptionTreshold: 15 // if active subscription has less than these many days, then reminders are shown upon login
 
     // Persistent Settings
     readonly property Settings userAccountDialogSettings: Settings {

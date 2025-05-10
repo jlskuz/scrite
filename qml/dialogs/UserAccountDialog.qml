@@ -63,7 +63,7 @@ Item {
 
         onClosed: HomeScreen.firstLaunch()
 
-        titleBarCloseButtonVisible: screenItem ? !screenItem.modal : Runtime.allowAppUsage
+        titleBarCloseButtonVisible: screenItem ? !screenItem.modal : true
         content: Loader {
             source: "qrc:/qml/dialogs/useraccountdialog/" + userAccountDialog.screenName + ".qml"
         }
@@ -127,39 +127,8 @@ Item {
             }
         }
 
-        readonly property Connections trackSubscriptionExpiry: Connections {
-            enabled: Scrite.user.loggedIn
-
-            target: Scrite.user
-
-            Notification.active: false
-            Notification.title: "Subscription Expiry"
-            Notification.text: "Your active subscription is about to expire in a few days."
-            Notification.buttons: ["View Plans", "Dismiss"]
-            Notification.onButtonClicked: (index) => {
-                if(index === 0) {
-                    launch("Subscriptions")
-                }
-            }
-
-            function onSubscriptionAboutToExpire(nrDays) {
-                Notification.text = "Your active subscription is about to expire in " + nrDays + " day(s)."
-                Notification.active = true
-            }
-
-            function onInfoChanged() {
-                if(!Scrite.user.info.hasActiveSubscription) {
-                    launch("Subscriptions")
-                    return
-                }
-
-                if(Notification.active && Scrite.user.info.hasUpcomingSubscription)
-                    Notification.active = false
-            }
-        }
-
         readonly property Connections trackImportantMessages: Connections {
-            enabled: Scrite.user.loggedIn && Scrite.user.info.hasActiveSubscription
+            enabled: true
 
             target: Scrite.user
 

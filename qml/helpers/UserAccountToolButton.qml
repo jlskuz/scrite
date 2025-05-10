@@ -159,7 +159,7 @@ Item {
         }
 
         MouseArea {
-            ToolTip.text: Scrite.user.loggedIn ? "Account Profile" : "Login"
+            ToolTip.text: "Account Profile"
             ToolTip.visible: containsMouse
 
             anchors.fill: parent
@@ -172,8 +172,6 @@ Item {
 
                 if(Scrite.user.unreadMessageCount > 0)
                     screenName = "Notifications"
-                else if(Scrite.user.info.hasActiveSubscription && !Scrite.user.info.hasUpcomingSubscription && Scrite.user.info.subscriptions[0].daysToUntil < 15)
-                    screenName = "Subscriptions"
 
                 UserAccountDialog.launch(screenName)
             }

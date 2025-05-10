@@ -296,7 +296,6 @@ private:
 
     void setInfo(const UserInfo &val);
     void setMessages(const QList<UserMessage> &val);
-    void checkIfSubscriptionIsAboutToExpire();
 
     void storeMessages();
     void loadStoredMessages();

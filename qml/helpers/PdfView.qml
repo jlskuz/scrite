@@ -234,7 +234,6 @@ Item {
                 icon.source: "qrc:/icons/file/file_download.png"
 
                 onClicked: saveMenu.open()
-                }
 
                 Item {
                     anchors.top: parent.top
