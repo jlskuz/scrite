@@ -136,7 +136,6 @@ public:
         StructureFeature,
         NotebookFeature,
         RelationshipGraphFeature,
-        ScriptalayFeature,
         TemplateFeature,
         ReportFeature,
         ImportFeature,

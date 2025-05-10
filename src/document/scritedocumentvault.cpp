@@ -203,7 +203,7 @@ void ScriteDocumentVault::saveToVault()
     if (m_document == nullptr)
         return;
 
-    if (m_document->isEmpty() || m_document->isFromScriptalay())
+    if (m_document->isEmpty())
         return;
 
     if (m_document->fileName().isEmpty() || !m_document->isAutoSave()) {

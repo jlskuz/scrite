@@ -43,7 +43,6 @@ qt6_add_qml_module(Scrite
         misc/annotations_metadata.json
         misc/structure_groups.lst
         misc/scrited_closing_frame_video.mp4
-        misc/scriptalay_info.md
         misc/homescreen_info.md
     NO_RESOURCE_TARGET_PATH
     OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CURRENT_SOURCE_DIR}/../Release/

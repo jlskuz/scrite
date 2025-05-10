@@ -800,15 +800,6 @@ bool ScriteDocument::isEmpty() const
     return objectCount == 0;
 }
 
-void ScriteDocument::setFromScriptalay(bool val)
-{
-    if (m_fromScriptalay == val)
-        return;
-
-    m_fromScriptalay = val;
-    emit fromScriptalayChanged();
-}
-
 void ScriteDocument::setCollaborators(const QStringList &val)
 {
     if (m_collaborators == val || !User::instance()->isLoggedIn()

@@ -155,37 +155,6 @@ QHash<int, QByteArray> Library::roleNames() const
 void Library::reload()
 {
     this->setRecords(QJsonArray());
-    this->fetchRecords();
-}
-
-void Library::fetchRecords()
-{
-    if (m_busy || !User::instance()->isLoggedIn())
-        return;
-
-    this->setBusy(true);
-
-    AbstractScriptalayRestApiCall *call = m_type == Screenplays
-            ? (AbstractScriptalayRestApiCall *)(new ScriptalayScreenplaysRestApiCall(this))
-            : (AbstractScriptalayRestApiCall *)(new ScriptalayTemplatesRestApiCall(this));
-
-    connect(call, &RestApiCall::finished, this, [=]() {
-        if (call->hasError() || !call->hasResponse()) {
-            this->setBusy(false);
-            return;
-        }
-
-        m_baseUrl = call->baseUrl();
-        emit baseUrlChanged();
-
-        this->setRecords(call->records());
-        this->setBusy(false);
-    });
-
-    if (!call->call()) {
-        call->deleteLater();
-        this->setBusy(false);
-    }
 }
 
 void Library::setRecords(const QJsonArray &array)
@@ -310,9 +279,6 @@ void LibraryServiceOpenRecordTask::recordFetched(const QString &name, const QByt
         ScriteDocument::instance()->printFormat()->resetToUserDefaults();
         ScriteDocument::instance()->formatting()->resetToUserDefaults();
     }
-
-    if (m_library->type() == Library::Screenplays)
-        ScriteDocument::instance()->setFromScriptalay(true);
 
     QTimer::singleShot(100, this, &LibraryServiceOpenRecordTask::complete);
 }

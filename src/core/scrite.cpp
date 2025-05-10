@@ -139,7 +139,6 @@ bool Scrite::isFeatureEnabled(AppFeature feature, const QStringList &features)
         { Scrite::StructureFeature, "structure" },
         { Scrite::NotebookFeature, "notebook" },
         { Scrite::RelationshipGraphFeature, "relationshipgraph" },
-        { Scrite::ScriptalayFeature, "scriptalay" },
         { Scrite::TemplateFeature, "template" },
         { Scrite::ReportFeature, "report" },
         { Scrite::ImportFeature, "import" },

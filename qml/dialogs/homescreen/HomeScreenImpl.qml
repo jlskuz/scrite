@@ -88,12 +88,6 @@ Item {
                 clip: true
 
                 initialItem: ContentPageLayout1 { }
-
-                function onShowScriptalay() {
-                    push(scriptalayPage)
-                }
-
-                Component.onCompleted: _private.showScriptalay.connect(onShowScriptalay)
             }
         }
     }
@@ -701,11 +695,11 @@ Item {
         }
 
         LinkButton {
-            text: Runtime.recentFiles.count === 0 ? "Recent files ..." : "Scriptalay"
-            iconSource: Runtime.recentFiles.count === 0 ? "qrc:/icons/filetype/document.png" : "qrc:/icons/action/library.png"
+            text: "Recent files ..."
+            iconSource: "qrc:/icons/filetype/document.png"
             Layout.fillWidth: true
-            tooltip: Runtime.recentFiles.count === 0 ? "Reopen a recently opened file." : "Download a screenplay from our online library."
-            onClicked: parent.stackView.push(scriptalayPage)
+            tooltip: "Reopen a recently opened file."
+            // TODO onClicked:
             enabled: Runtime.recentFiles.count > 0
         }
     }
@@ -753,31 +747,8 @@ Item {
         }
     }
 
-    Component {
-        id: quickFilesScriptalayDelegate
-
-        LinkButton {
-            required property int index
-            required property var record
-
-            width: ListView.view.width
-            text: record.name
-            tooltip: "<i>" + record.authors + "</i><br/><br/>" + record.logline
-            iconSource: libraryService.screenplays.baseUrl + "/" + record.poster
-            showPoster: true
-            onClicked: {
-                SaveFileTask.save( () => {
-                                        var task = OpenFromLibraryTask.openScreenplayAt(libraryService, index)
-                                        task.finished.connect(closeRequest)
-                                    } )
-            }
-        }
-    }
-
-    // This component should show "Recent Files", if recent files exist
-    // It should show Scriptalay Scripts, if no recent files exist.
     component QuickFileOpenOptions : Item {
-        property bool scriptalayMode: Runtime.recentFiles.count === 0
+        id: recentFilesPanel
 
         ColumnLayout {
             anchors.fill: parent
@@ -785,7 +756,7 @@ Item {
             VclLabel {
                 id: quickFileOptionsLabel
                 font.pointSize: Runtime.idealFontMetrics.font.pointSize
-                text: scriptalayMode ? "Scriptalay" : "Recent Files"
+                text:  "Recent Files"
             }
 
             Rectangle {
@@ -798,10 +769,10 @@ Item {
                 border.color: Runtime.colors.primary.borderColor
 
                 ListView {
-                    id: quickFilesView // shows either Scriptalay or Recent Files
+                    id: quickFilesView // shows Recent Files
                     anchors.fill: parent
                     anchors.margins: 1
-                    model: scriptalayMode ? libraryService.screenplays : Runtime.recentFiles
+                    model: Runtime.recentFiles
                     currentIndex: -1
                     clip: true
                     FlickScrollSpeedControl.factor: Runtime.workspaceSettings.flickScrollSpeedFactor
@@ -810,7 +781,7 @@ Item {
                     }
                     highlightMoveDuration: 0
                     interactive: height < contentHeight
-                    delegate: scriptalayMode ? quickFilesScriptalayDelegate : quickFilesRecentFilesDelegate
+                    delegate: quickFilesRecentFilesDelegate
                 }
             }
         }
@@ -834,171 +805,6 @@ Item {
             iconSource: "qrc:/icons/file/import_export.png"
             Layout.fillWidth: true
             onClicked: parent.stackView.push(importPage)
-        }
-    }
-
-    component ScriptalayPage : Item {
-        // Show contents of Scriptalay
-        property bool hasSelection: screenplaysView.currentIndex >= 0
-
-        function openSelected() {
-            SaveFileTask.save( () => {
-                                    if(screenplaysView.currentIndex >= 0) {
-                                         var task = OpenFromLibraryTask.openScreenplayAt(libraryService, screenplaysView.currentIndex)
-                                         task.finished.connect(closeRequest)
-                                     }
-                                } )
-        }
-
-        RowLayout {
-            anchors.fill: parent
-            spacing: 30
-
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-
-                color: Qt.rgba(0,0,0,0)
-                border.width: 1
-                border.color: Runtime.colors.primary.borderColor
-
-                ListView {
-                    id: screenplaysView
-                    anchors.fill: parent
-                    anchors.margins: 1
-                    clip: true
-                    model: libraryService.screenplays
-                    currentIndex: -1
-                    FlickScrollSpeedControl.factor: Runtime.workspaceSettings.flickScrollSpeedFactor
-                    highlight: Rectangle {
-                        color: Runtime.colors.primary.highlight.background
-                    }
-                    ScrollBar.vertical: VclScrollBar {
-                        flickable: screenplaysView
-                    }
-                    highlightMoveDuration: 0
-                    highlightResizeDuration: 0
-                    delegate: LinkButton {
-                        required property int index
-                        required property var record
-                        width: screenplaysView.width
-                        text: record.name
-                        singleClick: false
-                        iconSource: libraryService.screenplays.baseUrl + "/" + record.poster
-                        onClicked: screenplaysView.currentIndex = index
-                        onDoubleClicked: {
-                            screenplaysView.currentIndex = index
-                            Qt.callLater(openSelected)
-                        }
-                    }
-                }
-            }
-
-            Item {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-
-                ColumnLayout {
-                    anchors.fill: parent
-                    spacing: 20
-
-                    Image {
-                        readonly property StackView stackView: Aggregation.firstParent("QQuickStackView")
-
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: (_private.bannerSize.height / _private.bannerSize.width) * width
-
-                        visible: _private.layoutType === 2
-                        source: stackView.currentItem.bannerImage
-                        fillMode: Image.PreserveAspectFit
-
-                        Poster {
-                            id: scriptalayPoster
-
-                            anchors.fill: parent
-
-                            property Item sourceItem
-
-                            Connections {
-                                target: _private
-
-                                function onShowPosterRequest(_source, _image, _logline) {
-                                    scriptalayPoster.sourceItem = _source
-                                    scriptalayPoster.source = _image
-                                }
-
-                                function onHidePosterRequest(_source) {
-                                    if(scriptalayPoster.sourceItem === _source) {
-                                        scriptalayPoster.sourceItem = null
-                                        scriptalayPoster.source = undefined
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-
-                        color: Qt.rgba(0,0,0,0)
-                        border.width: 1
-                        border.color: Runtime.colors.primary.borderColor
-
-                        Flickable {
-                            id: screenplayDetailsFlick
-                            anchors.fill: parent
-                            anchors.margins: 1
-                            contentWidth: screenplayDetailsText.width
-                            contentHeight: screenplayDetailsText.height
-                            clip: true
-                            flickableDirection: Flickable.VerticalFlick
-
-                            ScrollBar.vertical: VclScrollBar {
-                                flickable: screenplayDetailsFlick
-                            }
-
-                            TextArea {
-                                id: screenplayDetailsText
-                                width: screenplayDetailsFlick.width-20
-                                property var record: screenplaysView.currentIndex >= 0 ? libraryService.screenplays.recordAt(screenplaysView.currentIndex) : undefined
-                                textFormat: record ? TextArea.RichText : TextArea.MarkdownText
-                                wrapMode: Text.WordWrap
-                                padding: 8
-                                readOnly: true
-                                background: Item { }
-                                font.pointSize: Runtime.idealFontMetrics.font.pointSize
-                                text: record ? composeTextFromRecord(record) : defaultText
-
-                                onRecordChanged: {
-                                    if(record) {
-                                        _private.showTooltipRequest(screenplaysView.currentItem, record.logline)
-                                        _private.showPosterRequest(screenplaysView.currentItem, screenplaysView.currentItem.iconSource, record.logline)
-                                    }
-                                }
-                                Component.onDestruction: {
-                                    _private.hideTooltipRequest(screenplayDetailsText)
-                                    _private.hidePosterRequest(screenplaysView.currentItem)
-                                }
-
-                                function composeTextFromRecord(_record) {
-                                    var ret =
-                                            "<strong>Written By:</strong> " + _record.authors + "<br/><br/>" +
-                                            "<strong>Pages:</strong> " + _record.pageCount + "<br/>" +
-                                            "<strong>Revision:</strong> " + _record.revision + "<br/><br/>" +
-                                            "<strong>Copyright:</strong> " + _record.copyright + "<br/><br/>" +
-                                            "<strong>Source:</strong> " + _record.source
-                                    if(_private.layoutType === 2)
-                                        ret += "<br/><br/><strong>Logline:</strong> " + _record.logline
-                                    return ret
-                                }
-
-                                readonly property string defaultText: Scrite.app.fileContents(":/misc/scriptalay_info.md")
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -1290,29 +1096,6 @@ Item {
     }
 
     Component {
-        id: scriptalayPage
-
-        StackPage {
-            id: scriptalayPageItem
-            readonly property string bannerImage: "qrc:/images/homescreen_scriptalay_banner.png"
-            content: ScriptalayPage { }
-            title: Item {
-                Image {
-                    anchors.centerIn: parent
-                    source: "qrc:/images/library.png"
-                    height: 36
-                    fillMode: Image.PreserveAspectFit
-                }
-            }
-            buttons: VclButton {
-                text: "Open"
-                enabled: scriptalayPageItem.contentItem.hasSelection && libraryService.screenplays.count > 0
-                onClicked: scriptalayPageItem.contentItem.openSelected()
-            }
-        }
-    }
-
-    Component {
         id: vaultPage
 
         StackPage {
@@ -1400,13 +1183,5 @@ Item {
         signal hideTooltipRequest(Item _source)
         signal showPosterRequest(Item _source, var _image, string _logline)
         signal hidePosterRequest(Item _source)
-        signal showScriptalay()
-
-        function switchMode() {
-            Utils.execLater(root, 500, () => {
-                                if(root.mode === "Scriptalay")
-                                    _private.showScriptalay()
-                            })
-        }
     }
 }
