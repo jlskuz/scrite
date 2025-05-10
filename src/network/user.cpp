@@ -447,18 +447,10 @@ User *User::instance()
 
 User::User(QObject *parent) : QObject(parent)
 {
-    connect(this, &User::infoChanged, this, &User::loggedInChanged);
-    connect(this, &User::loggedInChanged, this, &User::loadStoredMessages);
     connect(this, &User::messagesChanged, this, &User::storeMessages);
 }
 
 User::~User() { }
-
-bool User::isLoggedIn() const
-{
-    return true;
-    return m_info.isValid();
-}
 
 void User::logActivity2(const QString &activity, const QJsonValue &data)
 {
@@ -558,43 +550,12 @@ void User::setMessages(const QList<UserMessage> &val)
     emit messagesChanged();
 }
 
-void User::checkIfSubscriptionIsAboutToExpire()
-{
-    if (!m_info.isValid() || !m_info.hasActiveSubscription)
-        return;
-
-    const bool alreadyCheckedOnceToday = []() {
-        const QString lsKey = QStringLiteral("lastSubscriptionReminderDate");
-        const QVariant lastReminderDateVal = LocalStorage::load(lsKey);
-        if (lastReminderDateVal.isValid()) {
-            const QDate dt = lastReminderDateVal.value<QDate>();
-            if (dt == QDate::currentDate())
-                return true;
-        }
-
-        LocalStorage::store(lsKey, QDate::currentDate());
-        return false;
-    }();
-    if (alreadyCheckedOnceToday)
-        return;
-
-    UserMeRestApiCall *apiCall =
-            this->findChild<UserMeRestApiCall *>(QString(), Qt::FindDirectChildrenOnly);
-    if (apiCall) {
-        QTimer::singleShot(100, this, &User::checkIfSubscriptionIsAboutToExpire);
-        return;
-    }
-
-    const int subscriptionTreshold = 15;
-    const int nrDays = QDate::currentDate().daysTo(m_info.subscribedUntil.date()) + 1;
-    if (nrDays >= 0 && nrDays < subscriptionTreshold)
-        emit subscriptionAboutToExpire(nrDays);
-}
+//NOTE: LocalStorage::store("lastSubscriptionReminderDate", QDate::currentDate()); was dropped here, drop it everywhere else?
 
 void User::storeMessages()
 {
-    if (!this->isLoggedIn())
-        return;
+    //TODO if (!this->isLoggedIn())
+    return;
 
     QByteArray messageBytes;
     {
@@ -606,8 +567,8 @@ void User::storeMessages()
 
 void User::loadStoredMessages()
 {
-    if (!this->isLoggedIn())
-        return;
+    //TODO if (!this->isLoggedIn())
+    return;
 
     m_messages.clear();
 
@@ -692,23 +653,13 @@ AppFeature::~AppFeature() { }
 
 bool AppFeature::isEnabled(int feature)
 {
-    if (User::instance()->isLoggedIn() && User::instance()->info().hasActiveSubscription) {
-        return feature < 0 ? false
-                           : User::instance()->info().isFeatureEnabled(Scrite::AppFeature(feature));
-    }
-
-    return false;
+    return true;
 }
 
 bool AppFeature::isEnabled(const QString &featureName)
 {
+    // TODO
     return true;
-    if (User::instance()->isLoggedIn() && User::instance()->info().hasActiveSubscription) {
-        return featureName.isEmpty() ? false
-                                     : User::instance()->info().isFeatureNameEnabled(featureName);
-    }
-
-    return false;
 }
 
 void AppFeature::setFeatureName(const QString &val)
@@ -733,16 +684,8 @@ void AppFeature::setFeature(int val)
 
 void AppFeature::reevaluate()
 {
-    if (User::instance()->isLoggedIn() && User::instance()->info().hasActiveSubscription) {
-        const bool flag1 = m_feature < 0
-                ? true
-                : User::instance()->info().isFeatureEnabled(Scrite::AppFeature(m_feature));
-        const bool flag2 = m_featureName.isEmpty()
-                ? true
-                : User::instance()->info().isFeatureNameEnabled(m_featureName);
-        this->setEnabled(flag1 && flag2);
-    } else
-        this->setEnabled(false);
+    // TODO
+    this->setEnabled(true);
 }
 
 void AppFeature::setEnabled(bool val)

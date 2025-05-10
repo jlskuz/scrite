@@ -758,8 +758,6 @@ ScriteDocument::ScriteDocument(QObject *parent)
     // refer back to ScriteDocument::instance() and cause a recusrion,
     // leading to crash.
     QTimer::singleShot(0, this, [=]() {
-        connect(User::instance(), &User::loggedInChanged, this,
-                &ScriteDocument::canModifyCollaboratorsChanged);
         connect(User::instance(), &User::infoChanged, this,
                 &ScriteDocument::updateDocumentWindowTitle);
 
@@ -802,8 +800,7 @@ bool ScriteDocument::isEmpty() const
 
 void ScriteDocument::setCollaborators(const QStringList &val)
 {
-    if (m_collaborators == val || !User::instance()->isLoggedIn()
-        || !this->canModifyCollaborators())
+    if (m_collaborators == val || !this->canModifyCollaborators())
         return;
 
     if (val.isEmpty())
@@ -827,9 +824,6 @@ void ScriteDocument::setCollaborators(const QStringList &val)
 
 bool ScriteDocument::canModifyCollaborators() const
 {
-    if (!User::instance()->isLoggedIn())
-        return false;
-
     return m_collaborators.isEmpty()
             || m_collaborators.first().compare(User::instance()->info().email, Qt::CaseInsensitive)
             == 0;
@@ -865,7 +859,7 @@ void ScriteDocument::enableCollaboration()
     if (this->hasCollaborators())
         return;
 
-    if (User::instance()->isLoggedIn()) {
+    if (User::instance()->info()) {
         this->setCollaborators(QStringList({ User::instance()->info().email }));
     }
 }
@@ -2294,12 +2288,12 @@ bool ScriteDocument::load(const QString &fileName)
         }
 
         if (!m_collaborators.isEmpty()) {
-            if (!User::instance()->isLoggedIn()) {
-                m_collaborators.clear();
-                m_errorReport->setErrorMessage(QStringLiteral(
-                        "This document is protected. Please sign-up/login to open it."));
-                return false;
-            }
+            // if (!User::instance()->isLoggedIn()) {
+            //     m_collaborators.clear();
+            //     m_errorReport->setErrorMessage(QStringLiteral(
+            //             "This document is protected. Please sign-up/login to open it."));
+            //     return false;
+            // }
 
             const QString infoEmail = User::instance()->info().email;
             const QString lsEmail = LocalStorage::load("email").toString();

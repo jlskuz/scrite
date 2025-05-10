@@ -116,10 +116,10 @@ Library::Library(Library::Type type, QObject *parent) : QAbstractListModel(paren
 {
     this->setRecords(QJsonArray());
 
-    if (User::instance()->isLoggedIn())
-        this->fetchRecords();
+    // if (User::instance()->isLoggedIn())
+    //     this->fetchRecords();
 
-    connect(User::instance(), &User::loggedInChanged, this, &Library::fetchRecords);
+    // connect(User::instance(), &User::loggedInChanged, this, &Library::fetchRecords);
 }
 
 Library::~Library() { }

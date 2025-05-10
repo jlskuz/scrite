@@ -27,10 +27,6 @@ Item {
 
     Connections {
         target: Scrite.user
-
-        function onLoggedInChanged() {
-            _private.maybeShowUserProfileScreen()
-        }
     }
 
     BusyIndicator {
@@ -44,8 +40,7 @@ Item {
         id: _private
 
         function maybeShowUserProfileScreen() {
-            if(Scrite.user.loggedIn)
-                Announcement.shout(Runtime.announcementIds.userAccountDialogScreen, "UserProfileScreen")
+            Announcement.shout(Runtime.announcementIds.userAccountDialogScreen, "UserProfileScreen")
         }
     }
 }

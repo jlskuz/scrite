@@ -567,7 +567,7 @@ void Screenplay::setAuthor(const QString &val)
 QString Screenplay::author() const
 {
     if (m_author.isEmpty()) {
-        if (User::instance()->isLoggedIn())
+        if (User::instance()->info())
             return User::instance()->info().fullName;
         return QSysInfo::machineHostName();
     }

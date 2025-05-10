@@ -404,10 +404,6 @@ public:
     static User *instance();
     ~User();
 
-    Q_PROPERTY(bool loggedIn READ isLoggedIn NOTIFY infoChanged)
-    bool isLoggedIn() const;
-    Q_SIGNAL void loggedInChanged();
-
     Q_PROPERTY(UserInfo info READ info NOTIFY infoChanged)
     UserInfo info() const { return m_info; }
     Q_SIGNAL void infoChanged();

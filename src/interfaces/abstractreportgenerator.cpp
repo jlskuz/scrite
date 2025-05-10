@@ -79,16 +79,8 @@ QIcon AbstractReportGenerator::icon() const
 
 bool AbstractReportGenerator::isFeatureEnabled() const
 {
+    // TODO
     return true;
-    if (User::instance()->isLoggedIn()) {
-        const bool allReportsEnabled = AppFeature::isEnabled(Scrite::ReportFeature);
-        const bool thisSpecificImporterEnabled = allReportsEnabled
-                ? AppFeature::isEnabled(QStringLiteral("report/") + this->title())
-                : false;
-        return allReportsEnabled && thisSpecificImporterEnabled;
-    }
-
-    return false;
 }
 
 void AbstractReportGenerator::setWatermark(const QString &val)
