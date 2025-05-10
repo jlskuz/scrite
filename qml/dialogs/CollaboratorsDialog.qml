@@ -171,8 +171,8 @@ DialogLauncher {
 
                                 placeholderText: "Enter Email ID and hit Return"
                                 font.pointSize: Runtime.idealFontMetrics.font.pointSize
-                                validator: RegExpValidator {
-                                    regExp: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                                validator: RegularExpressionValidator {
+                                    regularExpression: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                                 }
                                 selectByMouse: true
                                 Keys.onReturnPressed: addCollaborator()
