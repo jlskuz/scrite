@@ -208,7 +208,7 @@ VclDialog {
             opacity: enabled ? 1 : 0.5
             enabled: {
                 if(modelData.feature !== "") {
-                    const afc = Qt.createQmlObject("import io.scrite.components 1.0; AppFeature { }", fieldLoader)
+                    const afc = Qt.createQmlObject("import io.scrite.components; AppFeature { }", fieldLoader)
                     afc.featureName = modelData.feature
                     const ret = afc.enabled
                     afc.destroy()

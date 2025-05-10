@@ -477,10 +477,6 @@ Item {
             feature: Scrite.ExportFeature
         }
 
-        readonly property AppFeature scriptalay: AppFeature {
-            feature: Scrite.ScriptalayFeature
-        }
-
         readonly property AppFeature templates: AppFeature {
             feature: Scrite.TemplateFeature
         }
@@ -649,7 +645,7 @@ Item {
 
         function onLoggedInChanged() {
             if(Scrite.user.loggedIn) {
-                let api = Qt.createQmlObject("import io.scrite.components 1.0; UserHelpTipsRestApiCall {}", root)
+                let api = Qt.createQmlObject("import io.scrite.components; UserHelpTipsRestApiCall {}", root)
                 api.finished.connect( () => {
                                           root.helpTips = api.helpTips
                                           api.destroy()

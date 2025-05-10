@@ -2037,7 +2037,7 @@ Item {
                     Announcement.shout(Runtime.announcementIds.closeHomeScreenRequest, undefined)
                     OpenFileTask.open(fileName)
                 } else {
-                    let fileInfo = Qt.createQmlObject("import io.scrite.components 1.0; BasicFileInfo { }", _private)
+                    let fileInfo = Qt.createQmlObject("import io.scrite.components; BasicFileInfo { }", _private)
                     fileInfo.absoluteFilePath = fileName
 
                     const justFileName = fileInfo.baseName
