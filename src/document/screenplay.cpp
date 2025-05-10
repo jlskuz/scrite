@@ -476,7 +476,6 @@ Screenplay::Screenplay(QObject *parent)
     fetchSettings(QStringLiteral("website"), m_website);
 
     QTimer::singleShot(100, this, [=]() {
-        connect(User::instance(), &User::loggedInChanged, this, &Screenplay::authorChanged);
         connect(User::instance(), &User::infoChanged, this, &Screenplay::authorChanged);
     });
 
@@ -567,7 +566,7 @@ void Screenplay::setAuthor(const QString &val)
 QString Screenplay::author() const
 {
     if (m_author.isEmpty()) {
-        if (User::instance()->info())
+        if (User::instance()->info().isValid())
             return User::instance()->info().fullName;
         return QSysInfo::machineHostName();
     }

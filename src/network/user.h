@@ -80,122 +80,6 @@ public:
 Q_DECLARE_METATYPE(UserInstallationInfo)
 Q_DECLARE_METATYPE(QList<UserInstallationInfo>)
 
-struct UserSubscriptionPlanInfo
-{
-    Q_GADGET
-    QML_ELEMENT
-    QML_UNCREATABLE("Instantiation from QML not allowed.")
-
-public:
-    UserSubscriptionPlanInfo() { }
-    UserSubscriptionPlanInfo(const QJsonObject &object);
-    UserSubscriptionPlanInfo(const UserSubscriptionPlanInfo &other);
-
-    bool operator==(const UserSubscriptionPlanInfo &other) const;
-    bool operator!=(const UserSubscriptionPlanInfo &other) const { return !(*this == other); }
-    UserSubscriptionPlanInfo &operator=(const UserSubscriptionPlanInfo &other);
-
-    Q_PROPERTY(QString name MEMBER name)
-    QString name;
-
-    Q_PROPERTY(QString kind MEMBER kind)
-    QString kind;
-
-    Q_PROPERTY(QString title MEMBER title)
-    QString title;
-
-    Q_PROPERTY(QString subtitle MEMBER subtitle)
-    QString subtitle;
-
-    Q_PROPERTY(int duration MEMBER duration)
-    int duration = 0;
-
-    Q_PROPERTY(bool exclusive MEMBER exclusive)
-    bool exclusive = false;
-
-    Q_PROPERTY(QString currency MEMBER currency)
-    QString currency;
-
-    Q_PROPERTY(qreal price MEMBER price)
-    qreal price = 0;
-
-    Q_PROPERTY(QStringList features MEMBER features)
-    QStringList features;
-
-    Q_PROPERTY(QString featureNote MEMBER featureNote)
-    QString featureNote;
-
-    Q_PROPERTY(int devices MEMBER devices)
-    int devices = 1;
-};
-Q_DECLARE_METATYPE(UserSubscriptionPlanInfo)
-Q_DECLARE_METATYPE(QList<UserSubscriptionPlanInfo>)
-
-struct UserSubscriptionInfo
-{
-    Q_GADGET
-    QML_ELEMENT
-    QML_UNCREATABLE("Instantiation from QML not allowed.")
-
-public:
-    UserSubscriptionInfo() { }
-    UserSubscriptionInfo(const QJsonObject &object);
-    UserSubscriptionInfo(const UserSubscriptionInfo &other);
-
-    bool operator==(const UserSubscriptionInfo &other) const;
-    bool operator!=(const UserSubscriptionInfo &other) const { return !(*this == other); }
-    UserSubscriptionInfo &operator=(const UserSubscriptionInfo &other);
-
-    Q_PROPERTY(bool valid READ isValid)
-    bool isValid() const { return !id.isEmpty(); }
-
-    Q_PROPERTY(QString id MEMBER id)
-    QString id;
-
-    Q_PROPERTY(QString kind MEMBER kind)
-    QString kind;
-
-    Q_PROPERTY(UserSubscriptionPlanInfo plan MEMBER plan)
-    UserSubscriptionPlanInfo plan;
-
-    Q_PROPERTY(QDateTime from MEMBER from)
-    QDateTime from;
-
-    Q_PROPERTY(QDateTime until MEMBER until)
-    QDateTime until;
-
-    Q_PROPERTY(QString wc_order_id MEMBER orderId)
-    Q_PROPERTY(QString orderId MEMBER orderId)
-    QString orderId;
-
-    Q_PROPERTY(QUrl detailsUrl MEMBER detailsUrl)
-    QUrl detailsUrl;
-
-    Q_PROPERTY(bool isActive MEMBER isActive)
-    bool isActive = false;
-
-    Q_PROPERTY(bool isUpcoming MEMBER isUpcoming)
-    bool isUpcoming = false;
-
-    Q_PROPERTY(bool hasExpired MEMBER hasExpired)
-    bool hasExpired = false;
-
-    Q_PROPERTY(int daysToUntil READ daysToUntil)
-    int daysToUntil() const { return QDateTime::currentDateTime().daysTo(this->until) + 1; }
-
-    Q_PROPERTY(int daysToFrom READ daysToFrom)
-    int daysToFrom() const { return QDateTime::currentDateTime().daysTo(this->from) + 1; }
-
-    Q_PROPERTY(QString description READ description)
-    QString description() const;
-
-    // feature is anything from Scrite::AppFeature
-    Q_INVOKABLE bool isFeatureEnabled(int feature) const;
-    Q_INVOKABLE bool isFeatureNameEnabled(const QString &featureName) const;
-};
-Q_DECLARE_METATYPE(UserSubscriptionInfo)
-Q_DECLARE_METATYPE(QList<UserSubscriptionInfo>)
-
 struct UserInfo
 {
     Q_GADGET
@@ -256,29 +140,8 @@ public:
     Q_PROPERTY(QList<UserInstallationInfo> installations MEMBER installations)
     QList<UserInstallationInfo> installations;
 
-    Q_PROPERTY(QList<UserSubscriptionInfo> subscriptions MEMBER subscriptions)
-    QList<UserSubscriptionInfo> subscriptions;
-
-    Q_PROPERTY(UserSubscriptionInfo publicBetaSubscription MEMBER publicBetaSubscription)
-    UserSubscriptionInfo publicBetaSubscription;
-
     Q_PROPERTY(int activeInstallationCount MEMBER activeInstallationCount)
     int activeInstallationCount = 0;
-
-    Q_PROPERTY(bool hasActiveSubscription MEMBER hasActiveSubscription)
-    bool hasActiveSubscription = false;
-
-    Q_PROPERTY(bool hasUpcomingSubscription MEMBER hasUpcomingSubscription)
-    bool hasUpcomingSubscription = false;
-
-    Q_PROPERTY(bool hasTrialSubscription MEMBER hasTrialSubscription)
-    bool hasTrialSubscription = false;
-
-    Q_PROPERTY(int paidSubscriptionCount MEMBER paidSubscriptionCount)
-    int paidSubscriptionCount = 0;
-
-    Q_PROPERTY(QDateTime subscribedUntil MEMBER subscribedUntil)
-    QDateTime subscribedUntil;
 
     Q_PROPERTY(bool isEarlyAdopter MEMBER isEarlyAdopter)
     bool isEarlyAdopter = false;
@@ -426,7 +289,6 @@ public:
     Q_INVOKABLE void markMessagesAsRead();
 
 signals:
-    void subscriptionAboutToExpire(int days);
     void notifyImportantMessages(const QList<UserMessage> &messages);
 
 private:

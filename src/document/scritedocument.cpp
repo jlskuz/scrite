@@ -859,7 +859,7 @@ void ScriteDocument::enableCollaboration()
     if (this->hasCollaborators())
         return;
 
-    if (User::instance()->info()) {
+    if (User::instance()->info().isValid()) {
         this->setCollaborators(QStringList({ User::instance()->info().email }));
     }
 }
@@ -2007,11 +2007,6 @@ void ScriteDocument::updateDocumentWindowTitle()
         title += QFileInfo(m_fileName).completeBaseName();
 
     title += QStringLiteral(" - ") + qApp->property("baseWindowTitle").toString();
-
-    if (User::instance()->isLoggedIn() && User::instance()->info().hasActiveSubscription) {
-        const UserSubscriptionInfo activeSub = User::instance()->info().subscriptions.first();
-        title += " [" + activeSub.description() + "]";
-    }
 
     this->setDocumentWindowTitle(title);
 }

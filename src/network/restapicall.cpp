@@ -1000,53 +1000,6 @@ void SessionNewRestApiCall::setResponse(const QJsonObject &val)
         ::ActiveSessionNewRestApiCall = nullptr;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-
-SubscriptionReferralCodeRestApiCall::SubscriptionReferralCodeRestApiCall(QObject *parent)
-    : RestApiCall(parent)
-{
-}
-
-SubscriptionReferralCodeRestApiCall::~SubscriptionReferralCodeRestApiCall() { }
-
-void SubscriptionReferralCodeRestApiCall::setCode(const QString &val)
-{
-    if (m_code == val)
-        return;
-
-    m_code = val;
-    emit codeChanged();
-}
-
-QJsonObject SubscriptionReferralCodeRestApiCall::data() const
-{
-    return { { "code", m_code } };
-}
-
-///////////////////////////////////////////////////////////////////////////////
-
-SubscriptionTrialDeclineReasonApiCall::SubscriptionTrialDeclineReasonApiCall(QObject *parent)
-    : RestApiCall(parent)
-{
-}
-
-SubscriptionTrialDeclineReasonApiCall::~SubscriptionTrialDeclineReasonApiCall() { }
-
-void SubscriptionTrialDeclineReasonApiCall::setReason(const QString &val)
-{
-    if (m_reason == val)
-        return;
-
-    m_reason = val.left(512);
-    emit reasonChanged();
-}
-
-QJsonObject SubscriptionTrialDeclineReasonApiCall::data() const
-{
-    return { { "reason", m_reason } };
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 
 AbstractScriptalayRestApiCall::AbstractScriptalayRestApiCall(QObject *parent) : RestApiCall(parent)
