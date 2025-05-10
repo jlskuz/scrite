@@ -57,7 +57,7 @@ void QObjectPropertyBase::objectDestroyed(QObject *ptr)
             if (m_resettableProperty.isResettable())
                 m_resettableProperty.reset(m_notify);
             else if (m_resettableProperty.isWritable())
-                m_resettableProperty.write(m_notify, QVariant(QMetaType::Nullptr, nullptr));
+                m_resettableProperty.write(m_notify, QVariant());
         }
 
         this->resetPointer();

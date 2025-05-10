@@ -338,12 +338,21 @@ void SyntaxHighlighter::staticClearDelegates(
 
 AbstractSyntaxHighlighterDelegate *
 SyntaxHighlighter::staticDelegateAt(QQmlListProperty<AbstractSyntaxHighlighterDelegate> *list,
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                                     int index)
+#else
+                                    qsizetype index)
+#endif
 {
     return reinterpret_cast<SyntaxHighlighter *>(list->data)->delegateAt(index);
 }
 
-int SyntaxHighlighter::staticDelegateCount(
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+SyntaxHighlighter::staticDelegateCount(
         QQmlListProperty<AbstractSyntaxHighlighterDelegate> *list)
 {
     return reinterpret_cast<SyntaxHighlighter *>(list->data)->delegateCount();

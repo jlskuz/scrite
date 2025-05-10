@@ -37,7 +37,7 @@ class Interface
 {
 public:
     virtual ~Interface();
-    virtual void prepareForSerialization() { }
+    virtual void prepareForSerialization() const { };
     virtual void prepareForDeserialization() { }
     virtual bool canSerialize(const QMetaObject *, const QMetaProperty &) const { return true; }
     virtual void serializeToJson(QJsonObject &) const { }

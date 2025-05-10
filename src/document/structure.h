@@ -571,8 +571,13 @@ private:
 
     static void staticAppendRelationship(QQmlListProperty<Relationship> *list, Relationship *ptr);
     static void staticClearRelationships(QQmlListProperty<Relationship> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static Relationship *staticRelationshipAt(QQmlListProperty<Relationship> *list, int index);
     static int staticRelationshipCount(QQmlListProperty<Relationship> *list);
+#else
+    static Relationship *staticRelationshipAt(QQmlListProperty<Relationship> *list, qsizetype index);
+    static qsizetype staticRelationshipCount(QQmlListProperty<Relationship> *list);
+#endif
 
 private:
     QString m_age;
@@ -1073,8 +1078,13 @@ private:
 
     static void staticAppendCharacter(QQmlListProperty<Character> *list, Character *ptr);
     static void staticClearCharacters(QQmlListProperty<Character> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static Character *staticCharacterAt(QQmlListProperty<Character> *list, int index);
     static int staticCharacterCount(QQmlListProperty<Character> *list);
+#else
+    static Character *staticCharacterAt(QQmlListProperty<Character> *list, qsizetype index);
+    static qsizetype staticCharacterCount(QQmlListProperty<Character> *list);
+#endif
     QObjectListModel<Character *> m_characters;
 
     Notes *m_notes = new Notes(this);
@@ -1083,8 +1093,13 @@ private:
     static void staticAppendElement(QQmlListProperty<StructureElement> *list,
                                     StructureElement *ptr);
     static void staticClearElements(QQmlListProperty<StructureElement> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static StructureElement *staticElementAt(QQmlListProperty<StructureElement> *list, int index);
     static int staticElementCount(QQmlListProperty<StructureElement> *list);
+#else
+    static StructureElement *staticElementAt(QQmlListProperty<StructureElement> *list, qsizetype index);
+    static qsizetype staticElementCount(QQmlListProperty<StructureElement> *list);
+#endif
     QObjectListModel<StructureElement *> m_elements;
     ModelAggregator m_elementsBoundingBoxAggregator;
     StructureElementStacks m_elementStacks;
@@ -1112,8 +1127,13 @@ private:
 
     static void staticAppendAnnotation(QQmlListProperty<Annotation> *list, Annotation *ptr);
     static void staticClearAnnotations(QQmlListProperty<Annotation> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static Annotation *staticAnnotationAt(QQmlListProperty<Annotation> *list, int index);
     static int staticAnnotationCount(QQmlListProperty<Annotation> *list);
+#else
+    static Annotation *staticAnnotationAt(QQmlListProperty<Annotation> *list, qsizetype index);
+    static qsizetype staticAnnotationCount(QQmlListProperty<Annotation> *list);
+#endif
     QObjectListModel<Annotation *> m_annotations;
     ModelAggregator m_annotationsBoundingBoxAggregator;
     bool m_canPaste = false;

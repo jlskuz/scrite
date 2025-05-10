@@ -12,7 +12,6 @@ list(APPEND scrite_SRCS
     src/core/application.cpp src/core/application.h
     src/core/application_build_timestamp.cpp
     src/core/appwindow.cpp src/core/appwindow.h
-    src/core/autoupdate.cpp src/core/autoupdate.h
     src/core/filelocker.cpp src/core/filelocker.h
     src/core/localstorage.cpp src/core/localstorage.h
     src/core/pdfexportablegraphicsscene.cpp src/core/pdfexportablegraphicsscene.h

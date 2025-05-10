@@ -2664,12 +2664,21 @@ void Scene::staticClearElements(QQmlListProperty<SceneElement> *list)
     reinterpret_cast<Scene *>(list->data)->clearElements();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 SceneElement *Scene::staticElementAt(QQmlListProperty<SceneElement> *list, int index)
+#else
+SceneElement *Scene::staticElementAt(QQmlListProperty<SceneElement> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<Scene *>(list->data)->elementAt(index);
 }
 
-int Scene::staticElementCount(QQmlListProperty<SceneElement> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+Scene::staticElementCount(QQmlListProperty<SceneElement> *list)
 {
     return reinterpret_cast<Scene *>(list->data)->elementCount();
 }
@@ -2807,13 +2816,6 @@ void SceneSizeHintItem::componentComplete()
     else
         this->updateSizeAndImageNow();
 }
-
-struct SceneSizeHintItem_TaskResult
-{
-    QSizeF documentSize;
-    QImage documentImage;
-};
-Q_DECLARE_METATYPE(SceneSizeHintItem_TaskResult)
 
 SceneSizeHintItem_TaskResult SceneSizeHintItem_Task2(const qreal devicePixelRatio,
                                                      const Scene *scene,
@@ -3348,12 +3350,21 @@ void SceneGroup::staticClearScenes(QQmlListProperty<Scene> *list)
     reinterpret_cast<SceneGroup *>(list->data)->clearScenes();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 Scene *SceneGroup::staticSceneAt(QQmlListProperty<Scene> *list, int index)
+#else
+Scene *SceneGroup::staticSceneAt(QQmlListProperty<Scene> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<SceneGroup *>(list->data)->sceneAt(index);
 }
 
-int SceneGroup::staticSceneCount(QQmlListProperty<Scene> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+SceneGroup::staticSceneCount(QQmlListProperty<Scene> *list)
 {
     return reinterpret_cast<SceneGroup *>(list->data)->sceneCount();
 }

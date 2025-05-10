@@ -166,8 +166,13 @@ private:
     void removeSearchAgent(SearchAgent *ptr);
     void sortSearchAgents();
     void sortSearchAgentsLater();
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static SearchAgent *staticSearchAgentAt(QQmlListProperty<SearchAgent> *list, int index);
     static int staticSearchAgentCount(QQmlListProperty<SearchAgent> *list);
+#else
+    static SearchAgent *staticSearchAgentAt(QQmlListProperty<SearchAgent> *list, qsizetype index);
+    static qsizetype staticSearchAgentCount(QQmlListProperty<SearchAgent> *list);
+#endif
 
     void doSearch();
     void doSearchLater();

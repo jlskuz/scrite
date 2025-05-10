@@ -15,6 +15,7 @@
 
 #include <QMetaProperty>
 #include <QTimerEvent>
+#include <QQmlListProperty>
 
 AbstractObjectTracker::AbstractObjectTracker(QObject *parent)
     : QObject(parent), m_target(this, "target")
@@ -352,13 +353,23 @@ void TrackerPack::staticClearTrackers(QQmlListProperty<AbstractObjectTracker> *l
     reinterpret_cast<TrackerPack *>(list->data)->clearTrackers();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 AbstractObjectTracker *TrackerPack::staticTrackerAt(QQmlListProperty<AbstractObjectTracker> *list,
                                                     int index)
+#else
+AbstractObjectTracker *TrackerPack::staticTrackerAt(QQmlListProperty<AbstractObjectTracker> *list,
+                                                    qsizetype index)
+#endif
 {
     return reinterpret_cast<TrackerPack *>(list->data)->trackerAt(index);
 }
 
-int TrackerPack::staticTrackerCount(QQmlListProperty<AbstractObjectTracker> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+TrackerPack::staticTrackerCount(QQmlListProperty<AbstractObjectTracker> *list)
 {
     return reinterpret_cast<TrackerPack *>(list->data)->trackerCount();
 }

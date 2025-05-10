@@ -439,9 +439,16 @@ private:
     ScreenplayPageLayout *m_pageLayout = new ScreenplayPageLayout(this);
     TransliterationEngine::Language m_defaultLanguage = TransliterationEngine::English;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static SceneElementFormat *staticElementFormatAt(QQmlListProperty<SceneElementFormat> *list,
                                                      int index);
     static int staticElementFormatCount(QQmlListProperty<SceneElementFormat> *list);
+#else
+    static SceneElementFormat *staticElementFormatAt(QQmlListProperty<SceneElementFormat> *list,
+                                                     qsizetype index);
+    static qsizetype staticElementFormatCount(QQmlListProperty<SceneElementFormat> *list);
+
+#endif
     QList<SceneElementFormat *> m_elementFormats;
 };
 

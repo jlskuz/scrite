@@ -414,13 +414,21 @@ void SearchEngine::sortSearchAgentsLater()
 {
     m_searchAgentSortTimer.start(0, this);
 }
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 SearchAgent *SearchEngine::staticSearchAgentAt(QQmlListProperty<SearchAgent> *list, int index)
+#else
+SearchAgent *SearchEngine::staticSearchAgentAt(QQmlListProperty<SearchAgent> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<SearchEngine *>(list->data)->searchAgentAt(index);
 }
 
-int SearchEngine::staticSearchAgentCount(QQmlListProperty<SearchAgent> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+SearchEngine::staticSearchAgentCount(QQmlListProperty<SearchAgent> *list)
 {
     return reinterpret_cast<SearchEngine *>(list->data)->searchAgentCount();
 }

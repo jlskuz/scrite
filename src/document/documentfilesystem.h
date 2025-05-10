@@ -20,6 +20,7 @@
 #include <QSize>
 #include <QImage>
 #include <QFileInfo>
+#include <QFutureWatcher>
 
 class DocumentFile;
 
@@ -85,6 +86,8 @@ private:
 private:
     friend class DocumentFile;
     DocumentFileSystemData *d;
+
+    QFutureWatcher<bool>* m_saveTaskWatcher = nullptr;
 };
 
 class DocumentFile : public QFile

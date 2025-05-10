@@ -181,7 +181,12 @@ void PainterPath::composePath()
 }
 
 AbstractPathElement *PainterPath::elements_at(QQmlListProperty<AbstractPathElement> *list,
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                                               int index)
+
+#else
+                                              qsizetype index)
+#endif
 {
     PainterPath *path = qobject_cast<PainterPath *>(list->object);
     if (path == nullptr || index < 0 || index >= path->m_pathElements.size())
@@ -204,7 +209,13 @@ void PainterPath::elements_append(QQmlListProperty<AbstractPathElement> *list,
     emit path->elementsChanged();
 }
 
-int PainterPath::elements_count(QQmlListProperty<AbstractPathElement> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+
+#else
+qsizetype
+#endif
+PainterPath::elements_count(QQmlListProperty<AbstractPathElement> *list)
 {
     PainterPath *path = qobject_cast<PainterPath *>(list->object);
     if (path == nullptr)

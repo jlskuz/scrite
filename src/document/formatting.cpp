@@ -1115,13 +1115,22 @@ void ScreenplayFormat::evaluateFontZoomLevels()
 }
 
 SceneElementFormat *
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 ScreenplayFormat::staticElementFormatAt(QQmlListProperty<SceneElementFormat> *list, int index)
+#else
+ScreenplayFormat::staticElementFormatAt(QQmlListProperty<SceneElementFormat> *list, qsizetype index)
+#endif
 {
     index = index % (SceneElement::Max + 1);
     return reinterpret_cast<ScreenplayFormat *>(list->data)->m_elementFormats.at(index);
 }
 
-int ScreenplayFormat::staticElementFormatCount(QQmlListProperty<SceneElementFormat> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+ScreenplayFormat::staticElementFormatCount(QQmlListProperty<SceneElementFormat> *list)
 {
     return reinterpret_cast<ScreenplayFormat *>(list->data)->m_elementFormats.size();
 }

@@ -17,6 +17,7 @@
 #include <QDir>
 #include <QJsonArray>
 #include <QQmlEngine>
+#include <QFileSystemWatcher>
 
 #include "screenplay.h"
 #include "structure.h"
@@ -28,12 +29,12 @@
 #include "documentfilesystem.h"
 #include "qtextdocumentpagedprinter.h"
 
-class ScriteDocument;
 #include "form.h"
 #include "filelocker.h"
 
 Q_MOC_INCLUDE("abstractreportgenerator.h")
 Q_MOC_INCLUDE("abstractexporter.h")
+
 class AbstractExporter;
 class AbstractReportGenerator;
 

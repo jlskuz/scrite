@@ -205,9 +205,15 @@ private:
     static void staticAppendTracker(QQmlListProperty<AbstractObjectTracker> *list,
                                     AbstractObjectTracker *ptr);
     static void staticClearTrackers(QQmlListProperty<AbstractObjectTracker> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static AbstractObjectTracker *staticTrackerAt(QQmlListProperty<AbstractObjectTracker> *list,
                                                   int index);
     static int staticTrackerCount(QQmlListProperty<AbstractObjectTracker> *list);
+#else
+    static AbstractObjectTracker *staticTrackerAt(QQmlListProperty<AbstractObjectTracker> *list,
+                                                  qsizetype index);
+    static qsizetype staticTrackerCount(QQmlListProperty<AbstractObjectTracker> *list);
+#endif
     QList<AbstractObjectTracker *> m_trackers;
 };
 

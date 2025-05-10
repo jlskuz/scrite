@@ -28,6 +28,7 @@
 #include <QAbstractListModel>
 #include <QQuickTextDocument>
 #include <QImage>
+#include <QFutureWatcher>
 
 #include "notes.h"
 #include "modifiable.h"
@@ -608,13 +609,25 @@ private:
 
     static void staticAppendElement(QQmlListProperty<SceneElement> *list, SceneElement *ptr);
     static void staticClearElements(QQmlListProperty<SceneElement> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static SceneElement *staticElementAt(QQmlListProperty<SceneElement> *list, int index);
     static int staticElementCount(QQmlListProperty<SceneElement> *list);
+#else
+    static SceneElement *staticElementAt(QQmlListProperty<SceneElement> *list, qsizetype index);
+    static qsizetype staticElementCount(QQmlListProperty<SceneElement> *list);
+#endif
     QList<SceneElement *> m_elements;
 
     Notes *m_notes = new Notes(this);
     Attachments *m_attachments = new Attachments(this);
 };
+
+struct SceneSizeHintItem_TaskResult
+{
+    QSizeF documentSize;
+    QImage documentImage;
+};
+Q_DECLARE_METATYPE(SceneSizeHintItem_TaskResult)
 
 class ScreenplayFormat;
 class SceneSizeHintItem : public QQuickItem
@@ -705,6 +718,8 @@ private:
     bool m_hasPendingComputeSize = false;
     QObjectProperty<Scene> m_scene;
     QObjectProperty<ScreenplayFormat> m_format;
+
+    QFutureWatcher<SceneSizeHintItem_TaskResult> *m_futureWatcher;
 };
 
 // Used only for querying and applying tagging to a bunch of scenes
@@ -771,8 +786,13 @@ private:
 private:
     static void staticAppendScene(QQmlListProperty<Scene> *list, Scene *ptr);
     static void staticClearScenes(QQmlListProperty<Scene> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static Scene *staticSceneAt(QQmlListProperty<Scene> *list, int index);
     static int staticSceneCount(QQmlListProperty<Scene> *list);
+#else
+    static Scene *staticSceneAt(QQmlListProperty<Scene> *list, qsizetype index);
+    static qsizetype staticSceneCount(QQmlListProperty<Scene> *list);
+#endif
     QStringList m_sceneActs;
     QStringList m_groupActs;
     QStringList m_sceneStackIds;

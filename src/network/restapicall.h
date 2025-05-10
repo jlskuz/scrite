@@ -208,8 +208,13 @@ public:
 private:
     static void staticAppendCall(QQmlListProperty<RestApiCall> *list, RestApiCall *ptr);
     static void staticClearCalls(QQmlListProperty<RestApiCall> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static RestApiCall *staticCallAt(QQmlListProperty<RestApiCall> *list, int index);
     static int staticCallCount(QQmlListProperty<RestApiCall> *list);
+#else
+    static RestApiCall *staticCallAt(QQmlListProperty<RestApiCall> *list, qsizetype index);
+    static qsizetype staticCallCount(QQmlListProperty<RestApiCall> *list);
+#endif
 
 protected:
     void itemInsertEvent(RestApiCall *ptr);

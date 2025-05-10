@@ -19,6 +19,8 @@
 #include <QSyntaxHighlighter>
 #include <QQuickTextDocument>
 
+#include "textlimiter.h"
+
 class SyntaxHighlighter;
 
 // This class is supposed to mimic QSyntaxHighlighter, without actually being one.
@@ -152,9 +154,15 @@ private:
     static void staticAppendDelegate(QQmlListProperty<AbstractSyntaxHighlighterDelegate> *list,
                                      AbstractSyntaxHighlighterDelegate *ptr);
     static void staticClearDelegates(QQmlListProperty<AbstractSyntaxHighlighterDelegate> *list);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static AbstractSyntaxHighlighterDelegate *
     staticDelegateAt(QQmlListProperty<AbstractSyntaxHighlighterDelegate> *list, int index);
     static int staticDelegateCount(QQmlListProperty<AbstractSyntaxHighlighterDelegate> *list);
+#else
+    static AbstractSyntaxHighlighterDelegate *
+    staticDelegateAt(QQmlListProperty<AbstractSyntaxHighlighterDelegate> *list, qsizetype index);
+    static qsizetype staticDelegateCount(QQmlListProperty<AbstractSyntaxHighlighterDelegate> *list);
+#endif
 
     void sortDelegates();
 
@@ -366,7 +374,6 @@ private:
     QStringList m_spellingSuggestionsForWordUnderCursor;
 };
 
-class TextLimiter;
 class TextLimiterSyntaxHighlighterDelegate : public AbstractSyntaxHighlighterDelegate
 {
     Q_OBJECT

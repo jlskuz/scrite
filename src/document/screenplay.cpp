@@ -3328,12 +3328,21 @@ void Screenplay::staticClearElements(QQmlListProperty<ScreenplayElement> *list)
     reinterpret_cast<Screenplay *>(list->data)->clearElements();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 ScreenplayElement *Screenplay::staticElementAt(QQmlListProperty<ScreenplayElement> *list, int index)
+#else
+ScreenplayElement *Screenplay::staticElementAt(QQmlListProperty<ScreenplayElement> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<Screenplay *>(list->data)->elementAt(index);
 }
 
-int Screenplay::staticElementCount(QQmlListProperty<ScreenplayElement> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+Screenplay::staticElementCount(QQmlListProperty<ScreenplayElement> *list)
 {
     return reinterpret_cast<Screenplay *>(list->data)->elementCount();
 }

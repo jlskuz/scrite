@@ -16,7 +16,6 @@
 #include "user.h"
 
 #include <QBuffer>
-#include <QRegExp>
 #include <QMimeData>
 #include <QClipboard>
 #include <QScopeGuard>

@@ -24,6 +24,7 @@
 #include <QtConcurrentMap>
 #include <QQuickItemGrabResult>
 #include <QFutureWatcher>
+#include <QFile>
 
 BoundingBoxEvaluator::BoundingBoxEvaluator(QObject *parent) : QObject(parent)
 {

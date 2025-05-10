@@ -118,9 +118,14 @@ private:
     void composePath();
 
 private:
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     static AbstractPathElement *elements_at(QQmlListProperty<AbstractPathElement> *, int);
-    static void elements_append(QQmlListProperty<AbstractPathElement> *, AbstractPathElement *);
     static int elements_count(QQmlListProperty<AbstractPathElement> *);
+#else
+    static AbstractPathElement *elements_at(QQmlListProperty<AbstractPathElement> *, qsizetype);
+    static qsizetype elements_count(QQmlListProperty<AbstractPathElement> *);
+#endif
+    static void elements_append(QQmlListProperty<AbstractPathElement> *, AbstractPathElement *);
     static void elements_clear(QQmlListProperty<AbstractPathElement> *);
 
 private:

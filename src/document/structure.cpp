@@ -2015,12 +2015,21 @@ void Character::staticClearRelationships(QQmlListProperty<Relationship> *list)
     reinterpret_cast<Character *>(list->data)->clearRelationships();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 Relationship *Character::staticRelationshipAt(QQmlListProperty<Relationship> *list, int index)
+#else
+Relationship *Character::staticRelationshipAt(QQmlListProperty<Relationship> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<Character *>(list->data)->relationshipAt(index);
 }
 
-int Character::staticRelationshipCount(QQmlListProperty<Relationship> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+Character::staticRelationshipCount(QQmlListProperty<Relationship> *list)
 {
     return reinterpret_cast<Character *>(list->data)->relationshipCount();
 }
@@ -4948,13 +4957,20 @@ void Structure::staticClearCharacters(QQmlListProperty<Character> *list)
 {
     reinterpret_cast<Structure *>(list->data)->clearCharacters();
 }
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 Character *Structure::staticCharacterAt(QQmlListProperty<Character> *list, int index)
+#else
+Character *Structure::staticCharacterAt(QQmlListProperty<Character> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<Structure *>(list->data)->characterAt(index);
 }
-
-int Structure::staticCharacterCount(QQmlListProperty<Character> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+Structure::staticCharacterCount(QQmlListProperty<Character> *list)
 {
     return reinterpret_cast<Structure *>(list->data)->characterCount();
 }
@@ -4969,12 +4985,21 @@ void Structure::staticClearElements(QQmlListProperty<StructureElement> *list)
     reinterpret_cast<Structure *>(list->data)->clearElements();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 StructureElement *Structure::staticElementAt(QQmlListProperty<StructureElement> *list, int index)
+#else
+StructureElement *Structure::staticElementAt(QQmlListProperty<StructureElement> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<Structure *>(list->data)->elementAt(index);
 }
 
-int Structure::staticElementCount(QQmlListProperty<StructureElement> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+Structure::staticElementCount(QQmlListProperty<StructureElement> *list)
 {
     return reinterpret_cast<Structure *>(list->data)->elementCount();
 }
@@ -5068,9 +5093,9 @@ void Structure::updateCharacterNamesShotsTransitionsAndTags()
     }
 
     const QStringList shots = [=]() {
-        QSet<QString> set = QSet<QString>::fromList(m_shotElementMap.shots());
-        set += QSet<QString>::fromList(Scrite::defaultShots());
-        QStringList ret = QStringList::fromSet(set);
+        QSet<QString> set(m_shotElementMap.shots().begin(), m_shotElementMap.shots().end());
+        set += QSet(Scrite::defaultShots().begin(), Scrite::defaultShots().end());
+        QStringList ret(set.begin(), set.end());
         std::sort(ret.begin(), ret.end());
         return ret;
     }();
@@ -5080,9 +5105,9 @@ void Structure::updateCharacterNamesShotsTransitionsAndTags()
     }
 
     const QStringList transitions = [=]() {
-        QSet<QString> set = QSet<QString>::fromList(m_transitionElementMap.transitions());
-        set += QSet<QString>::fromList(Scrite::defaultTransitions());
-        QStringList ret = QStringList::fromSet(set);
+        QSet<QString> set(m_transitionElementMap.transitions().begin(), m_transitionElementMap.transitions().end());
+        set += QSet(Scrite::defaultTransitions().begin(), Scrite::defaultTransitions().end());
+        QStringList ret(set.begin(), set.end());
         std::sort(ret.begin(), ret.end());
         return ret;
     }();
@@ -5107,12 +5132,21 @@ void Structure::staticClearAnnotations(QQmlListProperty<Annotation> *list)
     reinterpret_cast<Structure *>(list->data)->clearAnnotations();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 Annotation *Structure::staticAnnotationAt(QQmlListProperty<Annotation> *list, int index)
+#else
+Annotation *Structure::staticAnnotationAt(QQmlListProperty<Annotation> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<Structure *>(list->data)->annotationAt(index);
 }
 
-int Structure::staticAnnotationCount(QQmlListProperty<Annotation> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+Structure::staticAnnotationCount(QQmlListProperty<Annotation> *list)
 {
     return reinterpret_cast<Structure *>(list->data)->annotationCount();
 }

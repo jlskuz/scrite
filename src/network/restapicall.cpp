@@ -453,12 +453,21 @@ void RestApiCallList::staticClearCalls(QQmlListProperty<RestApiCall> *list)
     reinterpret_cast<RestApiCallList *>(list->data)->clearCalls();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 RestApiCall *RestApiCallList::staticCallAt(QQmlListProperty<RestApiCall> *list, int index)
+#else
+RestApiCall *RestApiCallList::staticCallAt(QQmlListProperty<RestApiCall> *list, qsizetype index)
+#endif
 {
     return reinterpret_cast<RestApiCallList *>(list->data)->callAt(index);
 }
 
-int RestApiCallList::staticCallCount(QQmlListProperty<RestApiCall> *list)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+int
+#else
+qsizetype
+#endif
+RestApiCallList::staticCallCount(QQmlListProperty<RestApiCall> *list)
 {
     return reinterpret_cast<RestApiCallList *>(list->data)->callCount();
 }

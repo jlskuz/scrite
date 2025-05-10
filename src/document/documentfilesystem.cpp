@@ -168,7 +168,7 @@ bool doUnzip(const QFileInfo &fileInfo, const QTemporaryDir &dstDir)
         if (!qzip.getCurrentFileInfo(&qfileInfo))
             break;
 
-        const QFileInfo dstFileInfo = dstDir.filePath(qfileInfo.name);
+        const QFileInfo dstFileInfo(dstDir.filePath(qfileInfo.name));
         const QString dstFileName = dstFileInfo.absoluteFilePath();
         QDir().mkpath(dstFileInfo.absolutePath());
 
@@ -410,20 +410,16 @@ bool DocumentFileSystem::save(const QString &fileName, bool encrypt, SaveMode mo
          */
         emit saveStarted();
 
-        const QString saveTaskWatcher = QStringLiteral("saveTaskWatcher");
-        QFutureWatcher<bool> *watcher = this->findChild<QFutureWatcher<bool> *>(
-                saveTaskWatcher, Qt::FindDirectChildrenOnly);
-        if (watcher) {
-            disconnect(watcher, &QFutureWatcher<bool>::finished, this,
+        if (m_saveTaskWatcher) {
+            disconnect(m_saveTaskWatcher, &QFutureWatcher<bool>::finished, this,
                        &DocumentFileSystem::saveTaskFinished);
-            watcher->deleteLater();
+            m_saveTaskWatcher->deleteLater();
         }
 
-        watcher = new QFutureWatcher<bool>(this);
-        watcher->setObjectName(saveTaskWatcher);
-        connect(watcher, &QFutureWatcher<bool>::finished, this,
+        m_saveTaskWatcher = new QFutureWatcher<bool>(this);
+        connect(m_saveTaskWatcher, &QFutureWatcher<bool>::finished, this,
                 &DocumentFileSystem::saveTaskFinished);
-        watcher->setFuture(QtConcurrent::run(saveTask, d->header, encrypt, QDir(d->folder->path()),
+        m_saveTaskWatcher->setFuture(QtConcurrent::run(saveTask, d->header, encrypt, QDir(d->folder->path()),
                                              fileName, &d->folderMutex));
 
         return true;
