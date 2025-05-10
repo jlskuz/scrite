@@ -16,7 +16,6 @@ set_source_files_properties(${qml_singletons} PROPERTIES QT_QML_SINGLETON_TYPE T
 ecm_target_qml_sources(scritenotifications
     SOURCES
         ${qml_singletons}
-        HelpTipNotification.qml
 )
 
 ecm_finalize_qml_module(scritenotifications DESTINATION ${KDE_INSTALL_QMLDIR})

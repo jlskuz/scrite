@@ -88,17 +88,6 @@ Item {
     Shortcut {
         enabled: Runtime.allowAppUsage
         context: Qt.ApplicationShortcut
-        sequence: "Ctrl+Shift+O"
-        onActivated: HomeScreen.launch("Scriptalay")
-
-        ShortcutsModelItem.group: "File"
-        ShortcutsModelItem.title: "Scriptalay"
-        ShortcutsModelItem.shortcut: sequence
-    }
-
-    Shortcut {
-        enabled: Runtime.allowAppUsage
-        context: Qt.ApplicationShortcut
         sequence: "Ctrl+P"
 
         ShortcutsModelItem.group: "Application"
@@ -735,11 +724,6 @@ Item {
                         ShortcutsModelItem.shortcut: "F10"
                     }
                 }
-
-                HelpTipNotification {
-                    tipName: Scrite.app.isWindowsPlatform ? "language_windows" : (Scrite.app.isMacOSPlatform ? "language_macos" : "language_linux")
-                    enabled: Scrite.app.transliterationEngine.language !== TransliterationEngine.English
-                }
             }
 
             FlatToolButton {
@@ -1301,10 +1285,6 @@ Item {
         ScreenplayEditor {
             id: screenplayEditor
 
-            HelpTipNotification {
-                tipName: "screenplay"
-            }
-
             // zoomLevelModifier: mainTabBar.currentIndex > 0 ? -3 : 0
             Component.onCompleted: {
                 const evalZoomLevelModifierFn = () => {
@@ -1628,12 +1608,7 @@ Item {
                                 anchors.bottom: parent.bottom
                                 visible: !Runtime.showNotebookInStructure || structureEditorTabs.currentTabIndex === 0
                                 active: Runtime.appFeatures.structure.enabled
-                                sourceComponent: StructureView {
-                                    HelpTipNotification {
-                                        tipName: "structure"
-                                        enabled: structureViewLoader.visible
-                                    }
-                                }
+                                sourceComponent: StructureView { }
 
                                 DisabledFeatureNotice {
                                     anchors.fill: parent
@@ -1982,24 +1957,6 @@ Item {
         }
     }
 
-    HelpTipNotification {
-        id: htNotification
-        enabled: tipName !== ""
-
-        Component.onCompleted: {
-            Qt.callLater( () => {
-                             if(Runtime.helpNotificationSettings.dayZero === "")
-                                Runtime.helpNotificationSettings.dayZero = new Date()
-
-                             const days = Runtime.helpNotificationSettings.daysSinceZero()
-                             if(days >= 2) {
-                                 if(!Runtime.helpNotificationSettings.isTipShown("discord"))
-                                     htNotification.tipName = "discord"
-                             }
-                         })
-        }
-    }
-
     QtObject {
         property ErrorReport applicationErrors: Aggregation.findErrorReport(Scrite.app)
         property bool errorReportHasError: applicationErrors.hasError
@@ -2055,29 +2012,10 @@ Item {
             }
         }
 
-        function showHelpTip(tipName) {
-            if(Runtime.helpTips[tipName] !== undefined && !Runtime.helpNotificationSettings.isTipShown(tipName)) {
-                helpTipNotification.createObject(Scrite.window.contentItem, {"tipName": tipName})
-            }
-        }
-
-        Announcement.onIncoming: (type, data) => {
-                                     if(type === Runtime.announcementIds.showHelpTip) {
-                                         _private.showHelpTip(""+data)
-                                     }
-                                 }
-
         Component.onCompleted: {
             if(Scrite.app.isMacOSPlatform)
                 Scrite.app.openFileRequest.connect(handleOpenFileRequest)
         }
     }
 
-    Component {
-        id: helpTipNotification
-        HelpTipNotification {
-            id: helpTip
-            Notification.onDismissed: helpTip.destroy()
-        }
-    }
 }

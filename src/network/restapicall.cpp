@@ -705,12 +705,6 @@ UserMessagesRestApiCall::~UserMessagesRestApiCall() { }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-UserHelpTipsRestApiCall::UserHelpTipsRestApiCall(QObject *parent) : RestApiCall(parent) { }
-
-UserHelpTipsRestApiCall::~UserHelpTipsRestApiCall() { }
-
-///////////////////////////////////////////////////////////////////////////////
-
 UserCheckRestApiCall::UserCheckRestApiCall(QObject *parent) : RestApiCall(parent) { }
 
 UserCheckRestApiCall::~UserCheckRestApiCall() { }

@@ -396,24 +396,6 @@ private:
     friend class User;
 };
 
-class UserHelpTipsRestApiCall : public RestApiCall
-{
-    Q_OBJECT
-    QML_ELEMENT
-
-public:
-    UserHelpTipsRestApiCall(QObject *parent = nullptr);
-    ~UserHelpTipsRestApiCall();
-
-    Q_PROPERTY(QJsonObject helpTips READ helpTips NOTIFY responseChanged)
-    QJsonObject helpTips() const { return this->responseData(); }
-
-    // RestApiCall interface
-    Type type() const { return GET; }
-    bool useSessionToken() const { return true; }
-    QString api() const { return "user/helpTips"; }
-};
-
 class UserCheckRestApiCall : public RestApiCall
 {
     Q_OBJECT

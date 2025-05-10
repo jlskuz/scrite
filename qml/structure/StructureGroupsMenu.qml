@@ -38,11 +38,6 @@ VclMenu {
     width: 450
     height: 500
 
-    HelpTipNotification {
-        id: htn
-        tipName: "story_beat_tagging"
-        enabled: false
-    }
     onOpened: htn.enabled = true
 
     VclMenuItem {

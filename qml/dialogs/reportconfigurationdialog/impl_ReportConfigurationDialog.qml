@@ -108,11 +108,6 @@ VclDialog {
                         report.capitalizeSentences = Runtime.screenplayEditorSettings.enableAutoCapitalizeSentences
                         report.polishParagraphs = Runtime.screenplayEditorSettings.enableAutoPolishParagraphs
                     }
-
-                    if(_private.isPdfExport)
-                        Runtime.showHelpTip("watermark")
-                    Runtime.showHelpTip("reports")
-                    Runtime.showHelpTip(Scrite.app.typeName(report))
                 }
             }
         }

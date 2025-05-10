@@ -160,12 +160,6 @@ VclDialog {
                     }
                 }
             }
-
-            Component.onCompleted: {
-                if(_private.isPdfExport)
-                    Runtime.showHelpTip("watermark")
-                Runtime.showHelpTip(Scrite.app.typeName(exporter))
-            }
         }
     }
 

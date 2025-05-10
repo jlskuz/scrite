@@ -73,8 +73,6 @@ VclDialog {
                 onItemChanged: {
                     if(item) {
                         item.pageListWidth = Qt.binding( () => { return pageListWidth } )
-
-                        Runtime.showHelpTip("settings" + settingsDialogTabBar.currentItem.text)
                     }
                 }
             }

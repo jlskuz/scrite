@@ -197,7 +197,6 @@ Item {
         property bool visible: true
     }
 
-    property var helpTips: undefined
     readonly property Settings helpNotificationSettings: Settings {
         fileName: Scrite.app.settingsFilePath
         category: "Help"
@@ -221,11 +220,6 @@ Item {
                 ts.push(val)
             tipsShown = ts.join(",")
         }
-    }
-
-    function showHelpTip(tipName) {
-        if(helpTips !== undefined)
-            Announcement.shout(Runtime.announcementIds.showHelpTip, tipName)
     }
 
     readonly property Settings notebookSettings: Settings {
@@ -258,7 +252,6 @@ Item {
 
         property real workspaceHeight
         property real screenplayEditorWidth: -1
-        property bool scriptalayIntroduced: false
         property bool showNotebookInStructure: true
         property bool syncCurrentSceneOnNotebook: true
         property bool animateStructureIcon: true
@@ -611,7 +604,6 @@ Item {
         readonly property string closeDialogBoxRequest: "A6456A87-FC8C-405B-BDD7-7625F86272BA"
         readonly property string userAccountDialogScreen: "24A8C9F3-1F62-4B14-A65E-250E53350152"
         readonly property string userProfileScreenPage: "D97FD221-5257-4A20-B9A2-744594E99D76"
-        readonly property string showHelpTip: "B168E17C-14CA-454F-9DF8-CAA381D9A8A2"
     }
 
     readonly property QtObject announcementData: QtObject {
@@ -636,23 +628,5 @@ Item {
         category: "RecentFiles"
 
         property var files: []
-    }
-
-    Connections {
-        enabled: root.helpTips === undefined
-
-        target: Scrite.user
-
-        function onLoggedInChanged() {
-            if(Scrite.user.loggedIn) {
-                let api = Qt.createQmlObject("import io.scrite.components; UserHelpTipsRestApiCall {}", root)
-                api.finished.connect( () => {
-                                          root.helpTips = api.helpTips
-                                          api.destroy()
-                                      })
-                if(!api.call())
-                    api.destroy()
-            }
-        }
     }
 }
