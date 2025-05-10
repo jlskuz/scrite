@@ -18,7 +18,7 @@ import QtQuick.Layouts 1.15
 import Qt.labs.settings 1.0
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.15
-import QtQuick.Controls 1.4 as OldControls
+//import QtQuick.Controls 1.4 as OldControls
 
 import io.scrite.components
 
@@ -349,253 +349,254 @@ Rectangle {
         anchors.bottom: parent.bottom
         Material.background: Qt.darker(Runtime.colors.primary.button.background, 1.1)
 
-        OldControls.TreeView {
-            id: notebookTree
-            SplitView.preferredWidth: Math.min(350, notebookView.width*0.25)
-            SplitView.minimumWidth: 150
-            clip: true
-            headerVisible: false
-            model: notebookModel
-            frameVisible: false
-            backgroundVisible: false
-            alternatingRowColors: false
-            horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOn
-            rowDelegate: Rectangle {
-                height: fontMetrics.height + 20
-                color: styleData.selected ? Runtime.colors.primary.highlight.background : Runtime.colors.primary.c10.background
-            }
-            EventFilter.events: [EventFilter.Wheel]
-            EventFilter.onFilter: {
-                if(event.type === EventFilter.Wheel && event.orientation === Qt.Horizontal) {
-                    result.filter = true
-                    result.acceptEvent = true
-                }
-            }
+        // TODO port to new TreeView!
+        // OldControls.TreeView {
+        //     id: notebookTree
+        //     SplitView.preferredWidth: Math.min(350, notebookView.width*0.25)
+        //     SplitView.minimumWidth: 150
+        //     clip: true
+        //     headerVisible: false
+        //     model: notebookModel
+        //     frameVisible: false
+        //     backgroundVisible: false
+        //     alternatingRowColors: false
+        //     horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+        //     verticalScrollBarPolicy: Qt.ScrollBarAlwaysOn
+        //     rowDelegate: Rectangle {
+        //         height: fontMetrics.height + 20
+        //         color: styleData.selected ? Runtime.colors.primary.highlight.background : Runtime.colors.primary.c10.background
+        //     }
+        //     EventFilter.events: [EventFilter.Wheel]
+        //     EventFilter.onFilter: {
+        //         if(event.type === EventFilter.Wheel && event.orientation === Qt.Horizontal) {
+        //             result.filter = true
+        //             result.acceptEvent = true
+        //         }
+        //     }
 
-            property var currentData: model.modelIndexData(currentIndex)
-            property Notes currentNotes: {
-                if(currentData.notebookItemType === NotebookModel.NotesType)
-                    return currentData.notebookItemObject
-                if(currentData.notebookItemType === NotebookModel.NoteType)
-                    return currentData.notebookItemObject.notes
-                if(currentData.notebookItemType === NotebookModel.CategoryType &&
-                        currentData.notebookItemCategory === NotebookModel.ScreenplayCategory)
-                    return Scrite.document.structure.notes
-                return null
-            }
-            property Note currentNote: currentData.notebookItemType === NotebookModel.NoteType ? currentData.notebookItemObject : null
-            property Character currentCharacter: currentNotes && currentNotes.ownerType === Notes.CharacterOwner ? currentNotes.character : null
+        //     property var currentData: model.modelIndexData(currentIndex)
+        //     property Notes currentNotes: {
+        //         if(currentData.notebookItemType === NotebookModel.NotesType)
+        //             return currentData.notebookItemObject
+        //         if(currentData.notebookItemType === NotebookModel.NoteType)
+        //             return currentData.notebookItemObject.notes
+        //         if(currentData.notebookItemType === NotebookModel.CategoryType &&
+        //                 currentData.notebookItemCategory === NotebookModel.ScreenplayCategory)
+        //             return Scrite.document.structure.notes
+        //         return null
+        //     }
+        //     property Note currentNote: currentData.notebookItemType === NotebookModel.NoteType ? currentData.notebookItemObject : null
+        //     property Character currentCharacter: currentNotes && currentNotes.ownerType === Notes.CharacterOwner ? currentNotes.character : null
 
-            itemDelegate: Item {
-                Rectangle {
-                    width: notebookTree.width - parent.x
-                    height: fontMetrics.height + 20
-                    color: {
-                        if(styleData.selected)
-                            return Runtime.colors.primary.highlight.background
+        //     itemDelegate: Item {
+        //         Rectangle {
+        //             width: notebookTree.width - parent.x
+        //             height: fontMetrics.height + 20
+        //             color: {
+        //                 if(styleData.selected)
+        //                     return Runtime.colors.primary.highlight.background
 
-                        var baseColor = undefined
+        //                 var baseColor = undefined
 
-                        if(styleData.value.notebookItemType === NotebookModel.NotesType) {
-                            switch(styleData.value.notebookItemObject.ownerType) {
-                            case Notes.SceneOwner:
-                            case Notes.CharacterOwner:
-                                baseColor = styleData.value.notebookItemObject.color
-                                break
-                            default:
-                                break
-                            }
-                        } else if(styleData.value.notebookItemType === NotebookModel.NoteType)
-                            baseColor = styleData.value.notebookItemObject.color
+        //                 if(styleData.value.notebookItemType === NotebookModel.NotesType) {
+        //                     switch(styleData.value.notebookItemObject.ownerType) {
+        //                     case Notes.SceneOwner:
+        //                     case Notes.CharacterOwner:
+        //                         baseColor = styleData.value.notebookItemObject.color
+        //                         break
+        //                     default:
+        //                         break
+        //                     }
+        //                 } else if(styleData.value.notebookItemType === NotebookModel.NoteType)
+        //                     baseColor = styleData.value.notebookItemObject.color
 
-                        if(baseColor)
-                            return Qt.tint(baseColor, "#E7FFFFFF")
+        //                 if(baseColor)
+        //                     return Qt.tint(baseColor, "#E7FFFFFF")
 
-                        return Runtime.colors.primary.c10.background
-                    }
+        //                 return Runtime.colors.primary.c10.background
+        //             }
 
-                    Row {
-                        width: parent.width
-                        height: parent.height
-                        spacing: 5
+        //             Row {
+        //                 width: parent.width
+        //                 height: parent.height
+        //                 spacing: 5
 
-                        Item {
-                            width: 1
-                            height: parent.height
-                            visible: itemDelegateIcon.visible
-                        }
+        //                 Item {
+        //                     width: 1
+        //                     height: parent.height
+        //                     visible: itemDelegateIcon.visible
+        //                 }
 
-                        Image {
-                            id: itemDelegateIcon
-                            width: parent.height * 0.6
-                            height: width
-                            mipmap: true
-                            anchors.verticalCenter: parent.verticalCenter
-                            visible: source != ""
-                            opacity: {
-                                switch(styleData.value.notebookItemType) {
-                                case NotebookModel.EpisodeBreakType:
-                                case NotebookModel.ActBreakType:
-                                    return styleData.value.notebookItemObject ? 1 : 0.5
-                                }
-                                return 1
-                            }
+        //                 Image {
+        //                     id: itemDelegateIcon
+        //                     width: parent.height * 0.6
+        //                     height: width
+        //                     mipmap: true
+        //                     anchors.verticalCenter: parent.verticalCenter
+        //                     visible: source != ""
+        //                     opacity: {
+        //                         switch(styleData.value.notebookItemType) {
+        //                         case NotebookModel.EpisodeBreakType:
+        //                         case NotebookModel.ActBreakType:
+        //                             return styleData.value.notebookItemObject ? 1 : 0.5
+        //                         }
+        //                         return 1
+        //                     }
 
-                            source: {
-                                switch(styleData.value.notebookItemType) {
-                                case NotebookModel.EpisodeBreakType:
-                                    return "qrc:/icons/content/episode.png"
-                                case NotebookModel.ActBreakType:
-                                    return "qrc:/icons/content/act.png"
-                                case NotebookModel.NotesType:
-                                    switch(styleData.value.notebookItemObject.ownerType) {
-                                    case Notes.SceneOwner:
-                                        return "qrc:/icons/content/scene.png"
-                                    case Notes.CharacterOwner:
-                                        return "qrc:/icons/content/person_outline.png"
-                                    case Notes.BreakOwner:
-                                        return "qrc:/icons/content/story.png"
-                                    default:
-                                        break
-                                    }
-                                    break;
-                                case NotebookModel.NoteType:
-                                    switch(styleData.value.notebookItemObject.type) {
-                                    case Note.TextNoteType:
-                                        return "qrc:/icons/content/note.png"
-                                    case Note.FormNoteType:
-                                        return "qrc:/icons/content/form.png"
-                                    case Note.CheckListNoteType:
-                                        return "qrc:/icons/content/checklist.png"
-                                    default:
-                                        break
-                                    }
-                                    break;
-                                }
+        //                     source: {
+        //                         switch(styleData.value.notebookItemType) {
+        //                         case NotebookModel.EpisodeBreakType:
+        //                             return "qrc:/icons/content/episode.png"
+        //                         case NotebookModel.ActBreakType:
+        //                             return "qrc:/icons/content/act.png"
+        //                         case NotebookModel.NotesType:
+        //                             switch(styleData.value.notebookItemObject.ownerType) {
+        //                             case Notes.SceneOwner:
+        //                                 return "qrc:/icons/content/scene.png"
+        //                             case Notes.CharacterOwner:
+        //                                 return "qrc:/icons/content/person_outline.png"
+        //                             case Notes.BreakOwner:
+        //                                 return "qrc:/icons/content/story.png"
+        //                             default:
+        //                                 break
+        //                             }
+        //                             break;
+        //                         case NotebookModel.NoteType:
+        //                             switch(styleData.value.notebookItemObject.type) {
+        //                             case Note.TextNoteType:
+        //                                 return "qrc:/icons/content/note.png"
+        //                             case Note.FormNoteType:
+        //                                 return "qrc:/icons/content/form.png"
+        //                             case Note.CheckListNoteType:
+        //                                 return "qrc:/icons/content/checklist.png"
+        //                             default:
+        //                                 break
+        //                             }
+        //                             break;
+        //                         }
 
-                                return ""
-                            }
-                        }
+        //                         return ""
+        //                     }
+        //                 }
 
-                        VclLabel {
-                            id: itemDelegateText
-                            padding: 5
-                            font.family: fontMetrics.font.family
-                            font.pointSize: fontMetrics.font.pointSize
-                            font.capitalization: fontMetrics.font.capitalization
-                            font.bold: styleData.value.notebookItemType === NotebookModel.CategoryType ||
-                                       (styleData.value.notebookItemType === NotebookModel.NotesType &&
-                                        styleData.value.notebookItemObject.ownerType === Notes.StructureOwner)
-                            text: styleData.value.notebookItemTitle ? styleData.value.notebookItemTitle : ""
-                            color: Scrite.app.textColorFor(parent.parent.color)
-                            elide: Text.ElideRight
-                            width: parent.width-(itemDelegateIcon.visible ? (itemDelegateIcon.width+parent.spacing) : 0)
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-                }
+        //                 VclLabel {
+        //                     id: itemDelegateText
+        //                     padding: 5
+        //                     font.family: fontMetrics.font.family
+        //                     font.pointSize: fontMetrics.font.pointSize
+        //                     font.capitalization: fontMetrics.font.capitalization
+        //                     font.bold: styleData.value.notebookItemType === NotebookModel.CategoryType ||
+        //                                (styleData.value.notebookItemType === NotebookModel.NotesType &&
+        //                                 styleData.value.notebookItemObject.ownerType === Notes.StructureOwner)
+        //                     text: styleData.value.notebookItemTitle ? styleData.value.notebookItemTitle : ""
+        //                     color: Scrite.app.textColorFor(parent.parent.color)
+        //                     elide: Text.ElideRight
+        //                     width: parent.width-(itemDelegateIcon.visible ? (itemDelegateIcon.width+parent.spacing) : 0)
+        //                     anchors.verticalCenter: parent.verticalCenter
+        //                 }
+        //             }
+        //         }
 
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.RightButton
-                    onClicked: {
-                        if(styleData.value.notebookItemType === NotebookModel.NoteType) {
-                            noteContextMenu.note = styleData.value.notebookItemObject
-                            noteContextMenu.popup()
-                        } else if(styleData.value.notebookItemType === NotebookModel.NotesType &&
-                                  styleData.value.notebookItemObject.ownerType === Notes.CharacterOwner) {
-                            characterContextMenu.character = styleData.value.notebookItemObject.character
-                            characterContextMenu.characterItem = parent
-                            characterContextMenu.popup()
-                        }
-                    }
-                }
-            }
-            OldControls.TableViewColumn {
-                title: "Name"
-                role: "notebookItemData"
-                width: 300
-                movable: false
-                resizable: false
-            }
+        //         MouseArea {
+        //             anchors.fill: parent
+        //             acceptedButtons: Qt.RightButton
+        //             onClicked: {
+        //                 if(styleData.value.notebookItemType === NotebookModel.NoteType) {
+        //                     noteContextMenu.note = styleData.value.notebookItemObject
+        //                     noteContextMenu.popup()
+        //                 } else if(styleData.value.notebookItemType === NotebookModel.NotesType &&
+        //                           styleData.value.notebookItemObject.ownerType === Notes.CharacterOwner) {
+        //                     characterContextMenu.character = styleData.value.notebookItemObject.character
+        //                     characterContextMenu.characterItem = parent
+        //                     characterContextMenu.popup()
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     OldControls.TableViewColumn {
+        //         title: "Name"
+        //         role: "notebookItemData"
+        //         width: 300
+        //         movable: false
+        //         resizable: false
+        //     }
 
-            function activateFromCurrentScreenplayElement() {
-                var spobj = Scrite.document.screenplay
-                var element = spobj.elementAt(spobj.currentElementIndex)
-                if(element) {
-                    if(element.elementType === ScreenplayElement.BreakElementType)
-                        switchTo(element)
-                    else
-                        switchTo(element.scene.notes)
-                }
-            }
+        //     function activateFromCurrentScreenplayElement() {
+        //         var spobj = Scrite.document.screenplay
+        //         var element = spobj.elementAt(spobj.currentElementIndex)
+        //         if(element) {
+        //             if(element.elementType === ScreenplayElement.BreakElementType)
+        //                 switchTo(element)
+        //             else
+        //                 switchTo(element.scene.notes)
+        //         }
+        //     }
 
-            property bool activatingScreenplayElement: false
-            function activateScreenplayElement(_modelData) {
-                activatingScreenplayElement = true
-                Qt.callLater( () => { notebookTree.activatingScreenplayElement = false })
+        //     property bool activatingScreenplayElement: false
+        //     function activateScreenplayElement(_modelData) {
+        //         activatingScreenplayElement = true
+        //         Qt.callLater( () => { notebookTree.activatingScreenplayElement = false })
 
-                var makeSceneCurrent = function(notes) {
-                    if(notes.ownerType === Notes.SceneOwner) {
-                        var scene = notes.owner
-                        var idxes = scene.screenplayElementIndexList
-                        if(idxes.length > 0)
-                            Scrite.document.screenplay.currentElementIndex = idxes[0]
-                    }
-                }
+        //         var makeSceneCurrent = function(notes) {
+        //             if(notes.ownerType === Notes.SceneOwner) {
+        //                 var scene = notes.owner
+        //                 var idxes = scene.screenplayElementIndexList
+        //                 if(idxes.length > 0)
+        //                     Scrite.document.screenplay.currentElementIndex = idxes[0]
+        //             }
+        //         }
 
-                switch(_modelData.notebookItemType) {
-                case NotebookModel.EpisodeBreakType:
-                case NotebookModel.ActBreakType:
-                    if(_modelData.notebookItemObject)
-                        Scrite.document.screenplay.currentElementIndex = Scrite.document.screenplay.indexOfElement(_modelData.notebookItemObject)
-                    break
-                case NotebookModel.NotesType:
-                    makeSceneCurrent(_modelData.notebookItemObject)
-                    break
-                case NotebookModel.NoteType:
-                    makeSceneCurrent(_modelData.notebookItemObject.notes)
-                    break
-                default:
-                    break
-                }
-            }
+        //         switch(_modelData.notebookItemType) {
+        //         case NotebookModel.EpisodeBreakType:
+        //         case NotebookModel.ActBreakType:
+        //             if(_modelData.notebookItemObject)
+        //                 Scrite.document.screenplay.currentElementIndex = Scrite.document.screenplay.indexOfElement(_modelData.notebookItemObject)
+        //             break
+        //         case NotebookModel.NotesType:
+        //             makeSceneCurrent(_modelData.notebookItemObject)
+        //             break
+        //         case NotebookModel.NoteType:
+        //             makeSceneCurrent(_modelData.notebookItemObject.notes)
+        //             break
+        //         default:
+        //             break
+        //         }
+        //     }
 
-            onClicked: {
-                if(Runtime.mainWindowTab !== Runtime.e_StructureTab || Runtime.workspaceSettings.syncCurrentSceneOnNotebook)
-                    activateScreenplayElement( notebookModel.modelIndexData(index) )
-            }
+        //     onClicked: {
+        //         if(Runtime.mainWindowTab !== Runtime.e_StructureTab || Runtime.workspaceSettings.syncCurrentSceneOnNotebook)
+        //             activateScreenplayElement( notebookModel.modelIndexData(index) )
+        //     }
 
-            onDoubleClicked: {
-                activateScreenplayElement( notebookModel.modelIndexData(index) )
-                if(isExpanded(index))
-                    collapse(index)
-                else
-                    expand(index)
-            }
+        //     onDoubleClicked: {
+        //         activateScreenplayElement( notebookModel.modelIndexData(index) )
+        //         if(isExpanded(index))
+        //             collapse(index)
+        //         else
+        //             expand(index)
+        //     }
 
-            function setCurrentIndex(modelIndex) {
-                var pmi = modelIndex.parent
-                while(pmi.valid) {
-                    notebookTree.expand(pmi)
-                    pmi = pmi.parent
-                }
+        //     function setCurrentIndex(modelIndex) {
+        //         var pmi = modelIndex.parent
+        //         while(pmi.valid) {
+        //             notebookTree.expand(pmi)
+        //             pmi = pmi.parent
+        //         }
 
-                var row = 0
-                while(1) {
-                    var idx = notebookTree.__model.mapRowToModelIndex(row)
-                    if(!idx.valid)
-                        break
-                    if(idx === modelIndex) {
-                        notebookTree.__listView.currentIndex = row
-                        notebookTree.__listView.positionViewAtIndex(row, ListView.Contain)
-                        break
-                    }
-                    ++row
-                }
-            }
-        }
+        //         var row = 0
+        //         while(1) {
+        //             var idx = notebookTree.__model.mapRowToModelIndex(row)
+        //             if(!idx.valid)
+        //                 break
+        //             if(idx === modelIndex) {
+        //                 notebookTree.__listView.currentIndex = row
+        //                 notebookTree.__listView.positionViewAtIndex(row, ListView.Contain)
+        //                 break
+        //             }
+        //             ++row
+        //         }
+        //     }
+        // }
 
         Rectangle {
             color: {
@@ -2507,13 +2508,13 @@ Rectangle {
                                 VclFileDialog {
                                     id: fileDialog
                                     nameFilters: ["Photos (*.jpg *.png *.bmp *.jpeg)"]
-                                    selectFolder: false
-                                    selectMultiple: false
-                                    sidebarVisible: true
-                                    selectExisting: true
-                                    folder: Runtime.workspaceSettings.lastOpenPhotosFolderUrl
+                                    // selectFolder: false
+                                    // selectMultiple: false
+                                    // sidebarVisible: true
+                                    // selectExisting: true
+                                    currentFolder: Runtime.workspaceSettings.lastOpenPhotosFolderUrl
                                      // The default Ctrl+U interfers with underline
-                                    onFolderChanged: Runtime.workspaceSettings.lastOpenPhotosFolderUrl = folder
+                                    onCurrentFolderChanged: Runtime.workspaceSettings.lastOpenPhotosFolderUrl = currentFolderChanged
 
                                     onAccepted: {
                                         if(fileUrl != "") {
