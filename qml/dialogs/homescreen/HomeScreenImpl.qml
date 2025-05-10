@@ -150,16 +150,6 @@ Item {
                 onClicked: Qt.openUrlExternally("https://www.scrite.io/help/")
             }
 
-            LinkButton {
-                Layout.fillWidth: true
-
-                text: "Discord Community"
-                color: Qt.rgba(0,0,0,0)
-                textColor: "white"
-                iconSource: "qrc:/icons/action/forum_inverted.png"
-
-                onClicked: JoinDiscordCommunity.launch()
-            }
         }
 
         VclLabel {
@@ -341,15 +331,6 @@ Item {
                         iconSource: "qrc:/icons/action/help.png"
 
                         onClicked: Qt.openUrlExternally("https://www.scrite.io/help/")
-                    }
-
-                    LinkButton {
-                        Layout.fillWidth: true
-
-                        text: "Discord Community"
-                        iconSource: "qrc:/icons/action/forum.png"
-
-                        onClicked: JoinDiscordCommunity.launch()
                     }
 
                     Item {

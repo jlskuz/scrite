@@ -13,7 +13,6 @@ set(qml_singletons
         ExportConfigurationDialog.qml
         FontSelectionDialog.qml
         HomeScreen.qml
-        JoinDiscordCommunity.qml
         MessageBox.qml
         PdfDialog.qml
         RenameCharacterDialog.qml

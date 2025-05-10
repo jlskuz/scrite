@@ -309,11 +309,6 @@ DialogLauncher {
                         text: "Learning Guides"
                         onClicked: Qt.openUrlExternally("https://www.scrite.io/help/")
                     }
-
-                    Button {
-                        text: "Discord"
-                        onClicked: JoinDiscordCommunity.launch()
-                    }
                 }
             }
         }
